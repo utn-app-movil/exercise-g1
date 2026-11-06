@@ -95,3 +95,4 @@ Mejorar la pantalla de lista de tareas (`TaskListActivity`) para permitir al usu
 - En el archivo de readme debe explicar los issues que encontró y cómo lo solucionó. Debe agregar screenshot como evidencia del debugging que realizó en la aplicación.
 - Deberá crear un PR de su branch de trabajo hacia main.
 - Debe agregar al profesor (ebarahonautn) como reviewer de su PR.
+- Cada uno debe subir al campus el link del PR donde realizó su práctica.
