@@ -84,5 +84,14 @@ Mejorar la pantalla de lista de tareas (`TaskListActivity`) para permitir al usu
 | **2. Pantalla de Estadísticas (Fase 1)** |     **30%**     | Diseño adecuado en XML, cálculo correcto de métricas y navegación funcional. |
 | **3. Búsqueda y Filtros (Fase 2)** |     **30%**     | Filtrado combinado en tiempo real por texto y estado. |
 | **4. Calidad del Código y Buenas Prácticas** |     **10%**     | Uso de arquitectura MVVM y nombres limpios. |
-| **5. Reto Opcional (Fase 3)** | **10%** | Implementación correcta de Swipe-to-Delete. |
+| **5. Reto (Fase 3)** | **10%** | Implementación correcta de Swipe-to-Delete. |
 | **TOTAL** |    **100%**     | |
+
+
+### Entregable:
+- Deberá crear un branch de trabajo a partir de main.
+- Cada persona deberá hacer sus propios commits y push.
+- Debe crear un archivo readme con el siguiente nombre: Resoluciion-practica-< nombre >.md
+- En el archivo de readme debe explicar los issues que encontró y cómo lo solucionó. Debe agregar screenshot como evidencia del debugging que realizó en la aplicación.
+- Deberá crear un PR de su branch de trabajo hacia main.
+- Debe agregar al profesor (ebarahonautn) como reviewer de su PR.
