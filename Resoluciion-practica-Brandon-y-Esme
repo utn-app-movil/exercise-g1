@@ -1,2 +1,4 @@
 ERROR 1:
 -La app crashea al abrirse el botón de ver la lista de tasks
+-Esto se debia a que no estaba en el manifesto de android
+-Lo arreglamos poniendolo en el manifesto de android
