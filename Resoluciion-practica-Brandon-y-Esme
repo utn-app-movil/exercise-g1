@@ -8,5 +8,3 @@ ERROR 2:
 -La primera entrada se repetia 2 veces si habia más de 1 entrada
 -Esto se debia a que, a la hora de pasar la posición del array, habia un -1. Lo que causaba que se repitiera la entrada
 -Se arregló quitandole ese -1
-
-![Error 2: duplicación](/Error2.png)
