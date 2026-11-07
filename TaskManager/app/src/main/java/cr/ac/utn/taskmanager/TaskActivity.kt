@@ -210,8 +210,6 @@ class TaskActivity : AppCompatActivity(),
                 && spStatus.selectedItem != null
                 && spPriority.selectedItem != null
                 && tvDueDate.text.toString().trim().isNotBlank()
-                && txtObservation.text.toString().trim().isNotBlank()
-                && txtAssignTo.text.toString().trim().isNotBlank()
     }
 
     fun saveTask(){
