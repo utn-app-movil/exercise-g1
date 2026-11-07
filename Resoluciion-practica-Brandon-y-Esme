@@ -13,3 +13,8 @@ ERROR 3:
 -En algunas entradas de la lista de tareas no se traen los datos correctamente
 -Ni idea de porqué
 -:(
+
+ERROR 4: 
+-La fecha aparece en el mismo formato no importa qué (el formato inferior de mm/dd/aaaa)
+-La aplicación no estaba tomando el formato, lo estaba setteando rigidamente
+-Lo arreglamos haciendo que use Pattern en vez de algo hardcodeado
