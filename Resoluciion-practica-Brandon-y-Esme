@@ -11,8 +11,8 @@ ERROR 2:
 
 ERROR 3:
 -En algunas entradas de la lista de tareas no se traen los datos correctamente
--Ni idea de porqué
--:(
+-Esto debido a que se estaba enviando el titulo en vez del ID
+-Se arregló haciendo que envie el valor correcto
 
 ERROR 4: 
 -La fecha aparece en el mismo formato no importa qué (el formato inferior de mm/dd/aaaa)
