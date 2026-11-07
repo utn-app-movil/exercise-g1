@@ -89,10 +89,4 @@ Durante esta práctica revisé errores del proyecto TaskManager en Kotlin. Utili
 
 ![Código de confirmación para eliminar](evidencias/09_confirmacion_eliminar_codigo.png)
 
-**Pendiente:** condicionar `mnuSave` cuando `isEditMode` sea `true`, mostrar diálogo de confirmación para actualizar y guardar capturas de ambos diálogos en ejecución, comprobando que seleccionar «No» no cambia los datos.
 
-
-
-Continuar comprobando errores de la Fase 0 y adjuntar capturas del depurador cuando corresponda. Después, desarrollar `TaskStatsActivity` (Fase 1), búsqueda y filtro de tareas (Fase 2), y eliminación por gesto con opción «Deshacer» (Fase 3). Conservar el trabajo en una rama personal y abrir un Pull Request hacia `main` solicitando la revisión de `ebarahonautn`.
-
-**Nota:** La numeración usada en el documento de evidencias original no es consistente entre sus encabezados y tablas. Aquí se reorganiza por tema para evitar confusiones.
