@@ -34,8 +34,11 @@ class TaskListActivity : AppCompatActivity(), OnItemClickListener {
     }
 
     override fun onItemClick(task: Task) {
-        util.openActivity(this,
+        util.openActivity(
+            this,
             TaskActivity::class.java,
-            EXTRA_MESSAGE_ID, task.title)
+            EXTRA_MESSAGE_ID,
+            task.id
+        )
     }
 }
