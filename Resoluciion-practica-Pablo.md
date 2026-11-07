@@ -1,6 +1,6 @@
 # Resolución de práctica — TaskManager (avance parcial)
 
-**Estudiante:** Mario Espinoza  
+**Estudiante:** Pablo Aguerp 
 **Curso:** Desarrollo de Aplicaciones Móviles  
 **Repositorio base:** https://github.com/utn-app-movil/exercise-g1  
 **Fecha:** 6 de noviembre de 2026  
@@ -91,18 +91,7 @@ Durante esta práctica revisé errores del proyecto TaskManager en Kotlin. Utili
 
 **Pendiente:** condicionar `mnuSave` cuando `isEditMode` sea `true`, mostrar diálogo de confirmación para actualizar y guardar capturas de ambos diálogos en ejecución, comprobando que seleccionar «No» no cambia los datos.
 
-## Resumen de evidencias
 
-| Tema | Evidencia incorporada | Verificación faltante |
-| --- | --- | --- |
-| Activity no registrada | Logcat de la excepción | Pantalla abierta luego del cambio |
-| Índices de RecyclerView | Ninguna en el documento recibido | Depuración y lista correcta |
-| Formato de fecha | Antes/después en `util.kt` | Guardado de fecha y corrección de `onDateSet()` |
-| Selección de tarea | Antes/después de `onItemClick()` | Carga real de la tarea seleccionada |
-| Modo creación/edición | Código anterior con `isEditMode = true` | Código corregido y prueba |
-| Diálogo de confirmación | Código antes y avance de eliminación | Confirmación de actualización y pruebas UI |
-
-## Siguiente trabajo
 
 Continuar comprobando errores de la Fase 0 y adjuntar capturas del depurador cuando corresponda. Después, desarrollar `TaskStatsActivity` (Fase 1), búsqueda y filtro de tareas (Fase 2), y eliminación por gesto con opción «Deshacer» (Fase 3). Conservar el trabajo en una rama personal y abrir un Pull Request hacia `main` solicitando la revisión de `ebarahonautn`.
 
