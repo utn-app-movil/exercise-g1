@@ -48,13 +48,15 @@ Práctica de corrección de errores en la aplicación Android **TaskManager**.
 
 **Antes (error):**
 
-📷 *[Pegar captura aquí]*
+![Error](imagenes/error3img1.png)
+
+![Error](imagenes/error3img2.png)
 
 **Solución:** en la función `searchTask` de la clase `TaskActivity`, restar 1 a `dueMonth` (`task.dueDate.monthValue - 1`), porque el `DatePickerDialog` usa meses de 0 a 11.
 
 **Después (corregido):**
 
-📷 *[Pegar captura aquí]*
+![Solucion](imagenes/solu3Img1.png)
 
 ---
 
@@ -64,13 +66,15 @@ Práctica de corrección de errores en la aplicación Android **TaskManager**.
 
 **Antes (error):**
 
-📷 *[Pegar captura aquí]*
+![Error](imagenes/error4img1.png)
+
+![Error](imagenes/error4img2.png)
 
 **Solución:** en la función `onItemClick` de `TaskListActivity`, cambiar el valor enviado en `util.openActivity` de `task.title` a `task.id`.
 
 **Después (corregido):**
 
-📷 *[Pegar captura aquí]*
+![Solucion](imagenes/solu4Img1.png)
 
 ---
 
@@ -80,13 +84,19 @@ Práctica de corrección de errores en la aplicación Android **TaskManager**.
 
 **Antes (error):**
 
-📷 *[Pegar captura aquí]*
+![Error](imagenes/error5img1.png)
+
+![Error](imagenes/error5img2.png)
+
+![Error](imagenes/error5img3.png)
 
 **Solución:** en `TaskListAdapter.onBindViewHolder`, mostrar los datos únicamente según la posición: `val item = tasks[position]`.
 
 **Después (corregido):**
 
-📷 *[Pegar captura aquí]*
+![Solucion](imagenes/solu5Img1.png)
+
+![Solucion](imagenes/solu5Img2.png)
 
 ---
 
@@ -96,13 +106,20 @@ Práctica de corrección de errores en la aplicación Android **TaskManager**.
 
 **Antes (error):**
 
-📷 *[Pegar captura aquí]*
+![Error](imagenes/error6img1.png)
+
+![Error](imagenes/error6img2.png)
+
+![Error](imagenes/error6img3.png)
+
 
 **Solución:** en la función `cleanScreen` de `TaskActivity`, cambiar `isEditMode = true` por `isEditMode = false`, para que se valide si ya existe una tarea con ese id.
 
 **Después (corregido):**
 
-📷 *[Pegar captura aquí]*
+![Solucion](imagenes/solu6Img1.png)
+
+![Solucion](imagenes/solu6Img2.png)
 
 ---
 
