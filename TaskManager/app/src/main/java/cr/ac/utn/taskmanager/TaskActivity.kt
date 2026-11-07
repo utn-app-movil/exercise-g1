@@ -85,13 +85,21 @@ class TaskActivity : AppCompatActivity(),
         })
     }
 
-    override fun onDateSet(view: android.widget.DatePicker?, year: Int
-                            , month: Int, dayOfMonth: Int) {
-        dueDay=dayOfMonth
-        dueMonth=month
-        dueYear=year
-        tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+    override fun onDateSet(
+        view: android.widget.DatePicker?,
+        year: Int,
+        month: Int,
+        dayOfMonth: Int
+    ) {
+        dueDay = dayOfMonth
+        dueMonth = month
+        dueYear = year
+
+        tvDueDate.text = getDateFormatString(
+            dayOfMonth,
+            month + 1,
+            year
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -99,7 +107,6 @@ class TaskActivity : AppCompatActivity(),
         inflater.inflate(R.menu.crud_actions, menu)
         menuDelete = menu!!.findItem(R.id.mnuDelete)
         menuDelete.isVisible = isEditMode
-        invalidateOptionsMenu()
         return true
     }
 
@@ -170,7 +177,7 @@ class TaskActivity : AppCompatActivity(),
                     task.dueDate.monthValue, task.dueDate.year)
                 tvDueDate.setText(dueDateStr)
                 dueDay = task.dueDate.dayOfMonth
-                dueMonth = task.dueDate.monthValue
+                dueMonth = task.dueDate.monthValue -1
                 dueYear = task.dueDate.year
                 invalidateOptionsMenu()
             }else{
@@ -190,7 +197,7 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=true
+        isEditMode=false
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
