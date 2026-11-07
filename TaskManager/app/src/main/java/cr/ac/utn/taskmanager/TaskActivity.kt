@@ -91,7 +91,7 @@ class TaskActivity : AppCompatActivity(),
         dueMonth=month
         dueYear=year
         tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+             month + 1, year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -190,7 +190,7 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=true
+        isEditMode=false
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
@@ -258,15 +258,29 @@ class TaskActivity : AppCompatActivity(),
         }
     }
 
-    fun deleteTask(): Unit{
-        try {
-            TaskViewModel.removeTask(txtId.text.toString())
-            cleanScreen()
-            Toast.makeText(this, getString(R.string.TextDeleteSuccess)
-                , Toast.LENGTH_LONG).show()
-        }catch (e: Exception){
-            Toast.makeText(this, e.message.toString()
-                , Toast.LENGTH_LONG).show()
-        }
+    fun deleteTask() {
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Está seguro de que desea eliminar esta tarea?")
+            .setPositiveButton("Sí, eliminar") { _, _ ->
+                try {
+                    TaskViewModel.removeTask(txtId.text.toString())
+                    cleanScreen()
+
+                    Toast.makeText(
+                        this,
+                        getString(R.string.TextDeleteSuccess),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        this,
+                        e.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 }
