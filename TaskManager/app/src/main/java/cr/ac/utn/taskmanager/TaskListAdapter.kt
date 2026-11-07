@@ -21,7 +21,7 @@ class TaskListAdapter (private var tasks: List<Task>,
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val item = if (position > 0) tasks[position - 1] else tasks[position]
+        val item = if (position > 0) tasks[position] else tasks[position]
         holder.bind(item, itemClickListener)
     }
 

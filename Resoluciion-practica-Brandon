@@ -1,0 +1,20 @@
+ERROR 1:
+-La app crashea al abrirse el botón de ver la lista de tasks
+-Esto se debia a que no estaba en el manifesto de android
+-Lo arreglamos poniendolo en el manifesto de android
+
+
+ERROR 2:
+-La primera entrada se repetia 2 veces si habia más de 1 entrada
+-Esto se debia a que, a la hora de pasar la posición del array, habia un -1. Lo que causaba que se repitiera la entrada
+-Se arregló quitandole ese -1
+
+ERROR 3:
+-En algunas entradas de la lista de tareas no se traen los datos correctamente
+-Esto debido a que se estaba enviando el titulo en vez del ID
+-Se arregló haciendo que envie el valor correcto
+
+ERROR 4: 
+-La fecha aparece en el mismo formato no importa qué (el formato inferior de mm/dd/aaaa)
+-La aplicación no estaba tomando el formato, lo estaba setteando rigidamente
+-Lo arreglamos haciendo que use Pattern en vez de algo hardcodeado
