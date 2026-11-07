@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Estadísticas de tareas"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:id="@+id/tvTotalTasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Total de tareas: 0"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:id="@+id/tvPending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pendientes: 0"
+            android:textSize="18sp"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tvInProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="En progreso: 0"
+            android:textSize="18sp"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tvCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Completadas: 0"
+            android:textSize="18sp"
+            android:padding="10dp" />
+
+        <TextView
+            android:id="@+id/tvCancelled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Canceladas: 0"
+            android:textSize="18sp"
+            android:padding="10dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Porcentaje de tareas completadas"
+            android:textSize="18sp"
+            android:layout_marginTop="24dp" />
+
+        <ProgressBar
+            android:id="@+id/progressCompleted"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:max="100"
+            android:progress="0"
+            android:layout_marginTop="12dp" />
+
+        <TextView
+            android:id="@+id/tvPercentage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="0% completadas"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_marginTop="12dp" />
+
+        <Button
+            android:id="@+id/btnBackMain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Volver al menú principal"
+            android:layout_marginTop="32dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,5 +1,6 @@
 package cr.ac.utn.taskmanager
 
+import androidx.appcompat.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.Menu
@@ -85,13 +86,21 @@ class TaskActivity : AppCompatActivity(),
         })
     }
 
-    override fun onDateSet(view: android.widget.DatePicker?, year: Int
-                            , month: Int, dayOfMonth: Int) {
-        dueDay=dayOfMonth
-        dueMonth=month
-        dueYear=year
-        tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+    override fun onDateSet(
+        view: android.widget.DatePicker?,
+        year: Int,
+        month: Int,
+        dayOfMonth: Int
+    ) {
+        dueDay = dayOfMonth
+        dueMonth = month
+        dueYear = year
+
+        tvDueDate.text = getDateFormatString(
+            dayOfMonth,
+            month + 1,
+            year
+        )
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -103,20 +112,50 @@ class TaskActivity : AppCompatActivity(),
         return true
     }
 
+    private fun showUpdateConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("Actualizar tarea")
+            .setMessage("¿Está seguro de que desea actualizar esta tarea?")
+            .setPositiveButton("Sí, actualizar") { _, _ ->
+                saveTask()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun showDeleteConfirmation() {
+        AlertDialog.Builder(this)
+            .setTitle("Eliminar tarea")
+            .setMessage("¿Está seguro de que desea eliminar esta tarea?")
+            .setPositiveButton("Sí, eliminar") { _, _ ->
+                deleteTask()
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+
             R.id.mnuSave -> {
-                saveTask()
+                if (isEditMode) {
+                    showUpdateConfirmation()
+                } else {
+                    saveTask()
+                }
                 return true
             }
+
             R.id.mnuDelete -> {
-                deleteTask()
+                showDeleteConfirmation()
                 return true
             }
+
             R.id.mnuCancel -> {
                 cleanScreen()
                 return true
             }
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
@@ -170,7 +209,7 @@ class TaskActivity : AppCompatActivity(),
                     task.dueDate.monthValue, task.dueDate.year)
                 tvDueDate.setText(dueDateStr)
                 dueDay = task.dueDate.dayOfMonth
-                dueMonth = task.dueDate.monthValue
+                dueMonth = task.dueDate.monthValue - 1
                 dueYear = task.dueDate.year
                 invalidateOptionsMenu()
             }else{
@@ -190,7 +229,7 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=true
+        isEditMode=false
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
