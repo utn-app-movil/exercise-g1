@@ -96,8 +96,8 @@ class TaskActivity : AppCompatActivity(),
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.crud_actions, menu)
         menuDelete = menu!!.findItem(R.id.mnuDelete)
+        inflater.inflate(R.menu.crud_actions, menu)
         menuDelete.isVisible = isEditMode
         invalidateOptionsMenu()
         return true
