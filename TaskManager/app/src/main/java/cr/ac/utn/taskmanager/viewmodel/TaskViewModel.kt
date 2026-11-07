@@ -5,6 +5,7 @@ import cr.ac.utn.taskmanager.data.memory.TaskMemoryManager
 import cr.ac.utn.taskmanager.domain.model.Task
 import cr.ac.utn.taskmanager.domain.repository.ITaskRepository
 
+
 class TaskViewModel: ViewModel() {
     companion object{
         private var repository: ITaskRepository
