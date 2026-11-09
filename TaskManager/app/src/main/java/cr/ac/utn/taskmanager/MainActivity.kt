@@ -1,5 +1,6 @@
 package cr.ac.utn.taskmanager
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -26,8 +27,8 @@ class MainActivity : AppCompatActivity() {
         val btnMessage1 : Button = findViewById<Button>(R.id.btnMessage1_main)
         btnMessage1.setOnClickListener(View.OnClickListener{ view ->
             Toast.makeText(this,
-                    getString(R.string.TextMessage1),
-                    Toast.LENGTH_LONG).show()
+                getString(R.string.TextMessage1),
+                Toast.LENGTH_LONG).show()
         })
 
         val clmain = findViewById<ConstraintLayout>(R.id.main)
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         val btnOpenScreen: Button = findViewById<Button>(R.id.btnOpenScreen_main)
         btnOpenScreen.setOnClickListener(View.OnClickListener{ view ->
             util.openActivity(this
-                    , SecondActivity::class.java)
+                , SecondActivity::class.java)
         })
 
         val btnOpenTask: Button = findViewById<Button>(R.id.btnTask_main)
@@ -63,5 +64,12 @@ class MainActivity : AppCompatActivity() {
             util.openActivity(this
                 , TaskListActivity::class.java)
         })
+
+        // Fase 1: abrir estadísticas
+        val btnTaskStats: Button = findViewById<Button>(R.id.btnTaskStats_main)
+        btnTaskStats.setOnClickListener {
+            val intent = Intent(this, TaskStatsActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

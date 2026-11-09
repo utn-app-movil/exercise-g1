@@ -7,7 +7,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
@@ -17,8 +16,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
-import cr.ac.utn.taskmanager.data.memory.TaskMemoryManager
 import cr.ac.utn.taskmanager.domain.model.Task
 import cr.ac.utn.taskmanager.domain.model.TaskPriority
 import cr.ac.utn.taskmanager.domain.model.TaskStatus
@@ -29,7 +26,7 @@ import java.time.LocalDate
 import java.util.Calendar
 
 class TaskActivity : AppCompatActivity(),
-            DatePickerDialog.OnDateSetListener{
+    DatePickerDialog.OnDateSetListener{
 
     private lateinit var txtId: EditText
     private lateinit var txtTitle: EditText
@@ -40,7 +37,7 @@ class TaskActivity : AppCompatActivity(),
     private lateinit var txtObservation: EditText
     private lateinit var tvDueDate: TextView
     private var dueDay: Int=0
-    private var dueMonth: Int=0
+    private var dueMonth: Int=0   // 0 = enero (como lo usa el DatePicker)
     private var dueYear: Int=0
     private var isEditMode: Boolean=false
     private lateinit var menuDelete: MenuItem
@@ -86,12 +83,13 @@ class TaskActivity : AppCompatActivity(),
     }
 
     override fun onDateSet(view: android.widget.DatePicker?, year: Int
-                            , month: Int, dayOfMonth: Int) {
+                           , month: Int, dayOfMonth: Int) {
         dueDay=dayOfMonth
         dueMonth=month
         dueYear=year
+        // CORREGIDO: el DatePicker da el mes desde 0, se suma 1 para mostrarlo
         tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+            month + 1, year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -99,7 +97,7 @@ class TaskActivity : AppCompatActivity(),
         inflater.inflate(R.menu.crud_actions, menu)
         menuDelete = menu!!.findItem(R.id.mnuDelete)
         menuDelete.isVisible = isEditMode
-        invalidateOptionsMenu()
+        // CORREGIDO: se quitó invalidateOptionsMenu() que causaba un ciclo infinito
         return true
     }
 
@@ -110,7 +108,11 @@ class TaskActivity : AppCompatActivity(),
                 return true
             }
             R.id.mnuDelete -> {
-                deleteTask()
+                // CORREGIDO: confirmación antes de eliminar
+                util.showDialogCondition(this,
+                    "¿Está seguro de que desea eliminar esta tarea?") {
+                    deleteTask()
+                }
                 return true
             }
             R.id.mnuCancel -> {
@@ -122,7 +124,6 @@ class TaskActivity : AppCompatActivity(),
     }
 
     private fun setupSpinners() {
-        // Adaptador para TaskStatus
         val statusAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
@@ -131,7 +132,6 @@ class TaskActivity : AppCompatActivity(),
         statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spStatus.adapter = statusAdapter
 
-        // Adaptador para TaskPriority
         val priorityAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
@@ -170,7 +170,8 @@ class TaskActivity : AppCompatActivity(),
                     task.dueDate.monthValue, task.dueDate.year)
                 tvDueDate.setText(dueDateStr)
                 dueDay = task.dueDate.dayOfMonth
-                dueMonth = task.dueDate.monthValue
+                // CORREGIDO: monthValue empieza en 1, el DatePicker espera desde 0
+                dueMonth = task.dueDate.monthValue - 1
                 dueYear = task.dueDate.year
                 invalidateOptionsMenu()
             }else{
@@ -190,7 +191,8 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=true
+        // CORREGIDO: al limpiar, ya no está editando
+        isEditMode=false
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
@@ -215,43 +217,51 @@ class TaskActivity : AppCompatActivity(),
     }
 
     fun saveTask(){
-        try {
-            if (isValidationData()){
-                val task = TaskViewModel.getTaskById(txtId.text.toString().trim())
-                if (task != null
-                    && !isEditMode){
-                    Toast.makeText(this, getString(R.string.TextDuplicateData)
-                        , Toast.LENGTH_LONG).show()
-                }else{
-                    val dueDate = util.parseStringToDateModern(tvDueDate.text.toString(),
-                        "dd/MM/yyyy")
-                    val selectedStatus = spStatus.selectedItem as TaskStatus
-                    val selectedPriority = spPriority.selectedItem as TaskPriority
-                    val task = Task(txtId.text.toString().trim(),
-                        txtTitle.text.toString().trim(),
-                        txtDescription.text.toString().trim(),
-                        LocalDate.of(dueDate?.year!!, dueDate?.month!!
-                            , dueDate?.dayOfMonth!!),
-                        LocalDate.now(),
-                        selectedStatus,
-                        txtAssignTo.text.toString().trim(),
-                        selectedPriority,
-                        txtObservation.text.toString().trim())
-
-                    if (!isEditMode)
-                        TaskViewModel.saveTask(task)
-                    else
-                        TaskViewModel.updateTask(task)
-
-                    cleanScreen()
-
-                    Toast.makeText(this, getString(R.string.TextSaveSuccess)
-                        , Toast.LENGTH_LONG).show()
-                }
-            }else{
-                Toast.makeText(this, "Datos incompletos"
-                    , Toast.LENGTH_LONG).show()
+        if (!isValidationData()){
+            Toast.makeText(this, "Datos incompletos", Toast.LENGTH_LONG).show()
+            return
+        }
+        if (isEditMode){
+            // CORREGIDO: confirmación antes de actualizar
+            util.showDialogCondition(this,
+                "¿Está seguro de que desea actualizar esta tarea?") {
+                performSave()
             }
+        } else {
+            performSave()
+        }
+    }
+
+    private fun performSave(){
+        try {
+            val existing = TaskViewModel.getTaskById(txtId.text.toString().trim())
+            if (existing != null && !isEditMode){
+                Toast.makeText(this, getString(R.string.TextDuplicateData)
+                    , Toast.LENGTH_LONG).show()
+                return
+            }
+            val dueDate = util.parseStringToDateModern(tvDueDate.text.toString(),
+                "dd/MM/yyyy")
+            val selectedStatus = spStatus.selectedItem as TaskStatus
+            val selectedPriority = spPriority.selectedItem as TaskPriority
+            val task = Task(txtId.text.toString().trim(),
+                txtTitle.text.toString().trim(),
+                txtDescription.text.toString().trim(),
+                LocalDate.of(dueDate?.year!!, dueDate.month, dueDate.dayOfMonth),
+                LocalDate.now(),
+                selectedStatus,
+                txtAssignTo.text.toString().trim(),
+                selectedPriority,
+                txtObservation.text.toString().trim())
+
+            if (!isEditMode)
+                TaskViewModel.saveTask(task)
+            else
+                TaskViewModel.updateTask(task)
+
+            cleanScreen()
+            Toast.makeText(this, getString(R.string.TextSaveSuccess)
+                , Toast.LENGTH_LONG).show()
         }catch (e: Exception){
             Toast.makeText(this, e.message.toString()
                 , Toast.LENGTH_LONG).show()

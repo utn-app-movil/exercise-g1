@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total de tareas"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtTotal_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtPending_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Pendientes: 0"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtInProgress_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="En progreso: 0"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtCompleted_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Completadas: 0"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtCancelled_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Canceladas: 0"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtPercent_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Completado: 0%"
+        android:textSize="18sp" />
+
+    <ProgressBar
+        android:id="@+id/pbCompleted_stats"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:progress="0" />
+
+    <Button
+        android:id="@+id/btnBack_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Volver" />
+</LinearLayout>
