@@ -27,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:maxLength="50"
                 android:inputType="text"
                 android:text="" />
 
@@ -53,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:maxLength="50"
                 android:inputType="text"
                 android:text="" />
         </TableRow>
@@ -72,6 +74,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:maxLength="50"
                 android:inputType="text"
                 android:text="" />
         </TableRow>
@@ -147,6 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:maxLength="50"
                 android:inputType="text"
                 android:text="" />
         </TableRow>
@@ -166,6 +170,7 @@
                 android:layout_width="154dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:maxLength="50"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
                 android:text="" />

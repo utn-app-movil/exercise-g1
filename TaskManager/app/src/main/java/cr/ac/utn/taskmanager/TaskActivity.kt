@@ -91,7 +91,7 @@ class TaskActivity : AppCompatActivity(),
         dueMonth=month
         dueYear=year
         tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+             month + 1, year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -106,11 +106,19 @@ class TaskActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mnuSave -> {
-                saveTask()
+                if (isEditMode) {
+                    util.showDialogCondition(this, getString(R.string.TextSaveQuestion)) {
+                        saveTask()
+                    }
+                } else {
+                    saveTask()
+                }
                 return true
             }
             R.id.mnuDelete -> {
-                deleteTask()
+                util.showDialogCondition(this, getString(R.string.TextDeleteQuestion)) {
+                    deleteTask()
+                }
                 return true
             }
             R.id.mnuCancel -> {
@@ -170,7 +178,7 @@ class TaskActivity : AppCompatActivity(),
                     task.dueDate.monthValue, task.dueDate.year)
                 tvDueDate.setText(dueDateStr)
                 dueDay = task.dueDate.dayOfMonth
-                dueMonth = task.dueDate.monthValue
+                dueMonth = task.dueDate.monthValue - 1
                 dueYear = task.dueDate.year
                 invalidateOptionsMenu()
             }else{
@@ -190,7 +198,7 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=true
+        isEditMode=false
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
@@ -230,7 +238,7 @@ class TaskActivity : AppCompatActivity(),
                     val task = Task(txtId.text.toString().trim(),
                         txtTitle.text.toString().trim(),
                         txtDescription.text.toString().trim(),
-                        LocalDate.of(dueDate?.year!!, dueDate?.month!!
+                        LocalDate.of(dueDate?.year!!, dueDate?.monthValue!!
                             , dueDate?.dayOfMonth!!),
                         LocalDate.now(),
                         selectedStatus,
