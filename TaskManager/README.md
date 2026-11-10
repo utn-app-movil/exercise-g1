@@ -44,4 +44,9 @@ La solución que ejecutamos es que al poner -1 al apartado del mes se pone en fo
 Problema 7
 Como dice el enunciado, no se muestran los dialog al momento de guardar o eliminar, adjuntamos evidencia.
 
-Como solución (queda pendiente)
+Como solución: Implementamos la función util.showDialogCondition dentro del método onOptionsItemSelected de TaskActivity.kt. De esta forma, al momento de actualizar (Guardar en modo edición) o Eliminar una tarea, la aplicación muestra una ventana emergente de confirmación preguntando al usuario si está seguro de realizar la acción antes de ejecutarla.
+
+Problema 8
+Al momento de guardar la tarea dentro de saveTask() en TaskActivity.kt, al construir el objeto LocalDate.of(...) se estaba utilizando la propiedad dueDate?.month!!, la cual retorna un objeto Enum de tipo java.time.Month (por ejemplo, Month.NOVEMBER) en lugar del valor numérico entero que requiere el método.
+
+Como solución: Se modificó la llamada en TaskActivity.kt sustituyendo dueDate?.month!! por la propiedad dueDate?.monthValue!! la cual entrega el entero correspondiente al mes (de 1 a 12), permitiendo reconstruir correctamente el objeto LocalDate sin errores de tipos de datos.

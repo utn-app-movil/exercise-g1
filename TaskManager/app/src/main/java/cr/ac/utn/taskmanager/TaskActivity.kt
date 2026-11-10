@@ -106,11 +106,19 @@ class TaskActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mnuSave -> {
-                saveTask()
+                if (isEditMode) {
+                    util.showDialogCondition(this, getString(R.string.TextSaveQuestion)) {
+                        saveTask()
+                    }
+                } else {
+                    saveTask()
+                }
                 return true
             }
             R.id.mnuDelete -> {
-                deleteTask()
+                util.showDialogCondition(this, getString(R.string.TextDeleteQuestion)) {
+                    deleteTask()
+                }
                 return true
             }
             R.id.mnuCancel -> {
@@ -230,7 +238,7 @@ class TaskActivity : AppCompatActivity(),
                     val task = Task(txtId.text.toString().trim(),
                         txtTitle.text.toString().trim(),
                         txtDescription.text.toString().trim(),
-                        LocalDate.of(dueDate?.year!!, dueDate?.month!!
+                        LocalDate.of(dueDate?.year!!, dueDate?.monthValue!!
                             , dueDate?.dayOfMonth!!),
                         LocalDate.now(),
                         selectedStatus,
