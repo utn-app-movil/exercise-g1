@@ -91,7 +91,7 @@ class TaskActivity : AppCompatActivity(),
         dueMonth=month
         dueYear=year
         tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+             month + 1, year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -115,6 +115,10 @@ class TaskActivity : AppCompatActivity(),
             }
             R.id.mnuCancel -> {
                 cleanScreen()
+                return true
+            }
+            android.R.id.home -> {
+                finish()
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
