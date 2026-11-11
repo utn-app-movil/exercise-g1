@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvTitleStats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resumen de Tareas"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Total de Tareas -->
+    <TextView
+        android:id="@+id/tvTotalTasks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Total de Tareas: 0"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleStats"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Desglose por Estados -->
+    <TextView
+        android:id="@+id/tvPending"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Pendientes (PENDING): 0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalTasks"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:id="@+id/tvInProgress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="En Progreso (IN_PROGRESS): 0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvPending"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/tvCompleted"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Completadas (COMPLETED): 0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvInProgress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/tvCancelled"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Canceladas (CANCELLED): 0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvCompleted"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Barra de Progreso de Completadas -->
+    <TextView
+        android:id="@+id/tvProgressLabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Porcentaje de Completadas:"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tvCancelled"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBarCompleted"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:max="100"
+        android:progress="0"
+        app:layout_constraintTop_toBottomOf="@id/tvProgressLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Botón Volver -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Volver al Menú Principal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
