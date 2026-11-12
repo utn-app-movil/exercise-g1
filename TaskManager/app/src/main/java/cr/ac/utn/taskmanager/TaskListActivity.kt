@@ -1,41 +1,200 @@
+
 package cr.ac.utn.taskmanager
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.ArrayAdapter
+import android.widget.AdapterView
+import android.widget.EditText
+import android.widget.Spinner
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.ItemTouchHelper
+import com.google.android.material.snackbar.Snackbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import cr.ac.utn.taskmanager.data.memory.TaskMemoryManager
 import cr.ac.utn.taskmanager.domain.model.Task
+import cr.ac.utn.taskmanager.domain.model.TaskStatus
 import cr.ac.utn.taskmanager.util.EXTRA_MESSAGE_ID
 import cr.ac.utn.taskmanager.util.util
 import cr.ac.utn.taskmanager.viewmodel.TaskViewModel
 
 class TaskListActivity : AppCompatActivity(), OnItemClickListener {
 
+    private lateinit var taskAdapter: TaskListAdapter
+    private lateinit var etSearchTask: EditText
+    private lateinit var spFilterStatus: Spinner
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_task_list)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val recycler = findViewById<RecyclerView>(R.id.rvTasks_List)
+        etSearchTask = findViewById(R.id.etSearchTask)
+        spFilterStatus = findViewById(R.id.spFilterStatus)
+
+        taskAdapter = TaskListAdapter(
+            TaskViewModel.getTasks(),
+            this
+        )
+
+        recycler.layoutManager = LinearLayoutManager(this)
+        recycler.adapter = taskAdapter
+
+        setupSpinner()
+        setupSearch()
+        setupSwipe(recycler)
+    }
+
+    private fun setupSpinner() {
+
+        val statuses = listOf("ALL") +
+                TaskStatus.entries.map { it.name }
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            statuses
+        )
+
+        adapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+
+        spFilterStatus.adapter = adapter
+
+        spFilterStatus.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    filterTasks()
+                }
+
+                override fun onNothingSelected(
+                    parent: AdapterView<*>?
+                ) {
+                }
+            }
+    }
+
+    private fun setupSearch() {
+
+        etSearchTask.addTextChangedListener(
+            object : TextWatcher {
+
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    before: Int,
+                    count: Int
+                ) {
+                    filterTasks()
+                }
+
+                override fun afterTextChanged(
+                    s: Editable?
+                ) {
+                }
+            }
+        )
+    }
+
+    private fun filterTasks() {
+
+        val searchText = etSearchTask.text.toString().trim()
+
+        val selectedStatus =
+            spFilterStatus.selectedItem?.toString() ?: "ALL"
+
+        val filteredTasks = TaskViewModel.getTasks().filter { task ->
+
+            val matchesSearch =
+                task.title.contains(searchText, ignoreCase = true)
+
+            val matchesStatus =
+                selectedStatus == "ALL" ||
+                        task.status.name == selectedStatus
+
+            matchesSearch && matchesStatus
         }
 
-        val recycler= findViewById<RecyclerView>(R.id.rvTasks_List)
-        val taskAdapter = TaskListAdapter(TaskViewModel.getTasks(),
-            this)
-        val layoutManager = LinearLayoutManager(applicationContext)
-        recycler.layoutManager = layoutManager
-        recycler.adapter = taskAdapter
+        taskAdapter.updateTasks(filteredTasks)
     }
 
     override fun onItemClick(task: Task) {
-        util.openActivity(this,
+        util.openActivity(
+            this,
             TaskActivity::class.java,
-            EXTRA_MESSAGE_ID, task.title)
+            EXTRA_MESSAGE_ID,
+            task.id
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (::taskAdapter.isInitialized) {
+            filterTasks()
+        }
+    }
+
+    private fun setupSwipe(recycler: RecyclerView) {
+
+        val swipeCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(
+                viewHolder: RecyclerView.ViewHolder,
+                direction: Int
+            ) {
+                val position = viewHolder.bindingAdapterPosition
+
+                if (position == RecyclerView.NO_POSITION) {
+                    return
+                }
+
+                val task = taskAdapter.getTaskAt(position)
+
+                TaskViewModel.removeTask(task.id)
+                filterTasks()
+
+                Snackbar.make(
+                    recycler,
+                    "Tarea eliminada",
+                    Snackbar.LENGTH_LONG
+                ).setAction("DESHACER") {
+
+                    TaskViewModel.saveTask(task)
+                    filterTasks()
+
+                }.show()
+            }
+        }
+
+        ItemTouchHelper(swipeCallback).attachToRecyclerView(recycler)
     }
 }
