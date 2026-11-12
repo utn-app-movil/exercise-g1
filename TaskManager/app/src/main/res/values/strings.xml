@@ -8,6 +8,14 @@
     <string name="TextSnackbar">Deshacer</string>
     <string name="btnTextTask_main">Gestión de Tareas</string>
     <string name="btnTextTaskList_main">Listar tareas</string>
+    <string name="btnTextTaskStats_main">Estadísticas de Tareas</string>
+    <string name="stats_total_tasks">Total de Tareas Registradas: %d</string>
+    <string name="stats_pending">Pendientes (PENDING): %d</string>
+    <string name="stats_in_progress">En Progreso (IN_PROGRESS): %d</string>
+    <string name="stats_completed">Completadas (COMPLETED): %d</string>
+    <string name="stats_cancelled">Canceladas (CANCELLED): %d</string>
+    <string name="stats_progress_label">Progreso de Tareas Completadas: %d%% (%d / %d)</string>
+    <string name="btn_back_main">Volver al Menú Principal</string>
     <string name="TextId">Id</string>
     <string name="TextTitle">Título de tarea</string>
     <string name="TextDescription">Descripción</string>

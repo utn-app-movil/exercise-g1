@@ -190,7 +190,7 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=true
+        isEditMode=false
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
@@ -220,31 +220,41 @@ class TaskActivity : AppCompatActivity(),
                     && !isEditMode){
                     Toast.makeText(this, getString(R.string.TextDuplicateData)
                         , Toast.LENGTH_LONG).show()
-                }else{
-                    val dueDate = util.parseStringToDateModern(tvDueDate.text.toString(),
-                        "dd/MM/yyyy")
+                    return
+                }else {
+                    val dueDate = util.parseStringToDateModern(
+                        tvDueDate.text.toString(),
+                        "dd/MM/yyyy"
+                    )
                     val selectedStatus = spStatus.selectedItem as TaskStatus
                     val selectedPriority = spPriority.selectedItem as TaskPriority
-                    val task = Task(txtId.text.toString().trim(),
+                    val task = Task(
+                        txtId.text.toString().trim(),
                         txtTitle.text.toString().trim(),
                         txtDescription.text.toString().trim(),
-                        LocalDate.of(dueDate?.year!!, dueDate?.month!!
-                            , dueDate?.dayOfMonth!!),
+                        LocalDate.of(
+                            dueDate?.year!!, dueDate?.month!!, dueDate?.dayOfMonth!!
+                        ),
                         LocalDate.now(),
                         selectedStatus,
                         txtAssignTo.text.toString().trim(),
                         selectedPriority,
-                        txtObservation.text.toString().trim())
+                        txtObservation.text.toString().trim()
+                    )
 
-                    if (!isEditMode)
+                    if (!isEditMode) {
                         TaskViewModel.saveTask(task)
-                    else
-                        TaskViewModel.updateTask(task)
-
-                    cleanScreen()
-
-                    Toast.makeText(this, getString(R.string.TextSaveSuccess)
-                        , Toast.LENGTH_LONG).show()
+                        cleanScreen()
+                        Toast.makeText(
+                            this, getString(R.string.TextSaveSuccess), Toast.LENGTH_LONG).show()
+                    } else {
+                        util.showDialogCondition(this,"¿Desea actualizar la tarea?") {
+                            TaskViewModel.updateTask(task)
+                            cleanScreen()
+                            Toast.makeText(
+                                this, getString(R.string.TextSaveSuccess), Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
             }else{
                 Toast.makeText(this, "Datos incompletos"
@@ -258,13 +268,14 @@ class TaskActivity : AppCompatActivity(),
 
     fun deleteTask(): Unit{
         try {
-            TaskViewModel.removeTask(txtId.text.toString())
-            cleanScreen()
-            Toast.makeText(this, getString(R.string.TextDeleteSuccess)
-                , Toast.LENGTH_LONG).show()
+            util.showDialogCondition(this,"¿Desea eliminar la tarea?") {
+                TaskViewModel.removeTask(txtId.text.toString())
+                cleanScreen()
+                Toast.makeText(
+                    this, getString(R.string.TextDeleteSuccess), Toast.LENGTH_LONG).show()
+            }
         }catch (e: Exception){
-            Toast.makeText(this, e.message.toString()
-                , Toast.LENGTH_LONG).show()
+            Toast.makeText(this, e.message.toString(), Toast.LENGTH_LONG).show()
         }
     }
 }
