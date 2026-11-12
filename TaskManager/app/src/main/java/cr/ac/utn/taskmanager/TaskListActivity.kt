@@ -10,6 +10,8 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.ItemTouchHelper
+import com.google.android.material.snackbar.Snackbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import cr.ac.utn.taskmanager.domain.model.Task
@@ -42,6 +44,7 @@ class TaskListActivity : AppCompatActivity(), OnItemClickListener {
 
         setupSpinner()
         setupSearch()
+        setupSwipe(recycler)
     }
 
     private fun setupSpinner() {
@@ -147,5 +150,51 @@ class TaskListActivity : AppCompatActivity(), OnItemClickListener {
         if (::taskAdapter.isInitialized) {
             filterTasks()
         }
+    }
+
+    private fun setupSwipe(recycler: RecyclerView) {
+
+        val swipeCallback = object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(
+                viewHolder: RecyclerView.ViewHolder,
+                direction: Int
+            ) {
+                val position = viewHolder.bindingAdapterPosition
+
+                if (position == RecyclerView.NO_POSITION) {
+                    return
+                }
+
+                val task = taskAdapter.getTaskAt(position)
+
+                TaskViewModel.removeTask(task.id)
+                filterTasks()
+
+                Snackbar.make(
+                    recycler,
+                    "Tarea eliminada",
+                    Snackbar.LENGTH_LONG
+                ).setAction("DESHACER") {
+
+                    TaskViewModel.saveTask(task)
+                    filterTasks()
+
+                }.show()
+            }
+        }
+
+        ItemTouchHelper(swipeCallback).attachToRecyclerView(recycler)
     }
 }

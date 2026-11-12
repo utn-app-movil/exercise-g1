@@ -45,6 +45,12 @@ class TaskListAdapter(
         tasks = newTasks
         notifyDataSetChanged()
     }
+
+    fun getTaskAt(position: Int): Task {
+        return tasks[position]
+    }
+
+
 }
 
 class CustomViewHolder(view: View) :
