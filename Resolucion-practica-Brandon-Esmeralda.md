@@ -2,8 +2,9 @@
 **Autores:** Brandon Conejo y Esmeralda Cordoba
 
 ## Fase 0: Debugging.
-
 ---
+**Punto 1**
+
 ERROR 1:
 -La app crashea al abrirse el botón de ver la lista de tasks
 -Esto se debia a que no estaba en el manifesto de android
@@ -39,12 +40,18 @@ En la mayoría de sistemas u sitios, estos campos son opcionales, por lo que obl
 
 Cómo lo solucioné: Simplemente eliminé a txtObservation y txtAssignTo de las restricciones.
 
----
-## Fase 1: Pantalla de Estadísticas.
----
+ERROR 7:En TaskActivity.kt el estado de isEditMode ubicado en cleanScreen().
+Justo después de guardar con éxito una task nueva, la pantalla se limpia pero isEditMode se queda en true, como resultado, la aplicación cree que se sigue editando, el campo del txtId queda bloqueado (enabled = false) y el botón de eliminar aparece en el menú superior cuando no debería (ya que es en una pantalla limpia para crear una nueva task).
 
-## Fase 2: Búsqueda y Filtros.
----
+Cómo lo solucioné: Simplemente se debe cambiar isEditMode a false.
 
-## Fase 3: Reto.
+ERROR 8: Falta de return.
+Si la tarea ya existe, muestra el Toast de datos duplicados, pero no detiene la ejecución, por lo que continúa guardando la task de todos modos.
+
+Cómo lo solucioné: Colocando el return justo antes del else y cerrando el Toast.
+
 ---
+**Punto 2**
+
+ERROR 9:
+Debería mostrarse un dialog con una pregunta de verificación cuando se desea actualizar o eliminar en la pantalla de Task.
