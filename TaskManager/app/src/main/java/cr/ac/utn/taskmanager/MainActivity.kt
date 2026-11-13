@@ -1,5 +1,6 @@
 package cr.ac.utn.taskmanager
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -11,6 +12,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
 import cr.ac.utn.taskmanager.util.util
+import cr.ac.utn.taskmanager.viewmodel.TaskStatsActivity
+import kotlin.jvm.java
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +66,12 @@ class MainActivity : AppCompatActivity() {
         btnOpenTaskList.setOnClickListener(View.OnClickListener{ view ->
             util.openActivity(this
                 , TaskListActivity::class.java)
+        })
+
+        val btnOpenTaskStats: Button = findViewById<Button>(R.id.btnTaskStats_main)
+        btnOpenTaskStats.setOnClickListener(View.OnClickListener{ view ->
+            val intent = Intent(this, TaskStatsActivity::class.java)
+            startActivity(intent)
         })
     }
 }
