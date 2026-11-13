@@ -32,4 +32,26 @@
     <string name="TextTitleDialogQuestion">Pregunta</string>
 
 
+    <string name="btnTextStats_main">Ver estadísticas</string>
+    <string name="TextUpdateQuestion">¿Desea actualizar la tarea?</string>
+    <string name="TextIncompleteData">Datos incompletos.</string>
+    <string name="TextInvalidDate">Fecha inválida.</string>
+    <string name="TextUndo">DESHACER</string>
+    <string name="FilterAll">TODAS</string>
+    <string name="FilterSearchHint">Buscar tareas por título, descripción o ID</string>
+    <string name="FilterStatusHint">Filtrar por estado</string>
+    <string name="StatsTitle">Resumen de tareas</string>
+    <string name="StatsTotalDefault">Total de tareas: 0</string>
+    <string name="StatsPendingDefault">Pendientes: 0</string>
+    <string name="StatsInProgressDefault">En progreso: 0</string>
+    <string name="StatsCompletedDefault">Completadas: 0</string>
+    <string name="StatsCancelledDefault">Canceladas: 0</string>
+    <string name="StatsPercentageDefault">Completadas: 0%%</string>
+    <string name="StatsTotalValue">Total de tareas: %1$d</string>
+    <string name="StatsPendingValue">Pendientes: %1$d</string>
+    <string name="StatsInProgressValue">En progreso: %1$d</string>
+    <string name="StatsCompletedValue">Completadas: %1$d</string>
+    <string name="StatsCancelledValue">Canceladas: %1$d</string>
+    <string name="StatsPercentageValue">Completadas: %1$d%%</string>
+    <string name="StatsBack">Volver al menú principal</string>
 </resources>

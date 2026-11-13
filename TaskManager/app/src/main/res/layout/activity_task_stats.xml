@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/StatsTitle"
+            android:textStyle="bold"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/tvTotalStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/StatsTotalDefault"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPendingStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/StatsPendingDefault"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvInProgressStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/StatsInProgressDefault"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvCompletedStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/StatsCompletedDefault"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvCancelledStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/StatsCancelledDefault"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvPercentageStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/StatsPercentageDefault"
+            android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/progressCompletedStats"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:max="100"
+            android:progress="0" />
+
+        <Button
+            android:id="@+id/btnBackStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/StatsBack" />
+    </LinearLayout>
+</ScrollView>
