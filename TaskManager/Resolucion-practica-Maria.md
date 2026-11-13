@@ -1,6 +1,6 @@
 # Errores encontrados
 
-**Estudiante:** María Murillo Chaves
+**Estudiantes:** María Murillo Chaves y Nailea Soto
 
 ## Fase 0: Identificación y corrección de errores
 
