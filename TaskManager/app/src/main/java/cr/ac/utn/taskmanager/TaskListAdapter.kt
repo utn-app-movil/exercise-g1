@@ -12,6 +12,10 @@ class TaskListAdapter (private var tasks: List<Task>,
                         val itemClickListener: OnItemClickListener):
                     RecyclerView.Adapter<CustomViewHolder>()
 {
+    fun updateData(newTasks: List<Task>) {
+        tasks = newTasks
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             CustomViewHolder {
         val itemView = LayoutInflater.from(parent.context).

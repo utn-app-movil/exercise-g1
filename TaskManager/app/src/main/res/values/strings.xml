@@ -30,6 +30,10 @@
     <string name="TextNo">No</string>
     <string name="TextDataNoFound">La información no existe.</string>
     <string name="TextTitleDialogQuestion">Pregunta</string>
-
-
+    <string name="search_hint" translatable="false">Buscar tareas...</string>
+    <string name="filter_all" translatable="false">TODAS</string>
+    <string name="filter_pending" translatable="false">PENDING</string>
+    <string name="filter_in_progress" translatable="false">IN_PROGRESS</string>
+    <string name="filter_completed" translatable="false">COMPLETED</string>
+    <string name="filter_cancelled" translatable="false">CANCELLED</string>
 </resources>
