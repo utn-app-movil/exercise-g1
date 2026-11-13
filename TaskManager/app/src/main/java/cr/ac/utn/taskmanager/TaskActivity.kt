@@ -105,7 +105,20 @@ class TaskActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mnuSave -> {
-                saveTask()
+
+                if (isEditMode && isValidationData()) {
+
+                    util.showDialogCondition(
+                        this,
+                        "De verdad quieres actualizar la tarea?"
+                    ) {
+                        saveTask()
+                    }
+
+                } else {
+                    saveTask()
+                }
+
                 return true
             }
             R.id.mnuDelete -> {

@@ -30,6 +30,37 @@
     <string name="TextNo">No</string>
     <string name="TextDataNoFound">La información no existe.</string>
     <string name="TextTitleDialogQuestion">Pregunta</string>
+    <string name="stats_title">Resumen de tareas</string>
+    <string name="stats_total_default">Total de tareas: 0</string>
+    <string name="stats_pending_default">Pendientes: 0</string>
+    <string name="stats_in_progress_default">En progreso: 0</string>
+    <string name="stats_completed_default">Completadas: 0</string>
+    <string name="stats_cancelled_default">Canceladas: 0</string>
+    <string name="stats_progress_default">Tareas completadas: 0%</string>
+    <string name="stats_back_main">Volver al menú principal</string>
+    <string name="stats_total_count">Total de tareas: %1$d</string>
+    <string name="stats_pending_count">Pendientes: %1$d</string>
+    <string name="stats_in_progress_count">En progreso: %1$d</string>
+    <string name="stats_completed_count">Completadas: %1$d</string>
+    <string name="stats_cancelled_count">Canceladas: %1$d</string>
+    <string name="stats_progress_count">Tareas completadas: %1$d%%</string>
+    <!-- Botón de estadísticas -->
+    <string name="btnTextTaskStats_main">Estadísticas de tareas</string>
+    <!-- Búsqueda y filtros de tareas -->
 
+    <string name="task_search_hint">Buscar tareas...</string>
 
+    <string name="task_filter_all">Todas</string>
+    <string name="task_filter_pending">Pendientes</string>
+    <string name="task_filter_in_progress">En progreso</string>
+    <string name="task_filter_completed">Completadas</string>
+    <string name="task_filter_cancelled">Canceladas</string>
+
+    <string-array name="task_filter_options">
+        <item>@string/task_filter_all</item>
+        <item>@string/task_filter_pending</item>
+        <item>@string/task_filter_in_progress</item>
+        <item>@string/task_filter_completed</item>
+        <item>@string/task_filter_cancelled</item>
+    </string-array>
 </resources>

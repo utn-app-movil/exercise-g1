@@ -42,6 +42,18 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
+        <!-- Pantalla de estadísticas de tareas -->
+        <activity
+            android:name=".TaskStatsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+
+        </activity>
+
     </application>
 
 </manifest>

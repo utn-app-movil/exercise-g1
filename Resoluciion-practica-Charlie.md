@@ -5,138 +5,51 @@
 **Rama:** `Caguirret`  
 **Repositorio:** https://github.com/utn-app-movil/exercise-g1
 
-## Fase 0: Corrección de errores
+## Fase 0. Corrección de errores
 
-En esta fase revisé los errores del proyecto y realicé los siguientes cambios.
+Revisé el proyecto y corregí los ocho errores encontrados:
 
-### Error 1. No abría la lista de tareas
+| Error | Problema y solución | Evidencia |
+|---|---|---|
+| 1 | La lista no abría: registré `TaskListActivity` en el manifiesto. | [Antes](evidencias/01_manifest_antes.png) · [Después](evidencias/01_manifest_despues.png) |
+| 2 | El calendario mostraba el mes incorrecto: ajusté el número de mes. | [Corrección](evidencias/02_calendario_mes_corregido.png) |
+| 3 | La fecha se leía con un formato fijo: corregí el uso de `pattern`. | [Antes](evidencias/03_formato_fecha_antes.png) · [Después](evidencias/03_formato_fecha_despues.png) |
+| 4 | Una fecha vacía podía causar un error: agregué validación. | [Antes](evidencias/04_fecha_nula_antes.png) · [Después](evidencias/04_fecha_nula_despues.png) |
+| 5 | Al editar, el calendario abría en otro mes: corregí el mes inicial. | [Antes](evidencias/05_mes_edicion_antes.png) · [Después](evidencias/05_mes_edicion_despues.png) |
+| 6 | El formulario permanecía en modo edición: restablecí `isEditMode`. | [Antes](evidencias/06_modo_edicion_antes.png) · [Después](evidencias/06_modo_edicion_despues.png) |
+| 7 | La lista repetía tareas: corregí el acceso por posición. | [Antes](evidencias/07_lista_antes.png) · [Después](evidencias/07_lista_despues.png) |
+| 8 | Se enviaba el título en lugar del ID: corregí el dato al abrir la tarea. | [Antes](evidencias/08_identificador_antes.png) · [Después](evidencias/08_identificador_despues.png) |
 
-**Archivo:** `AndroidManifest.xml`
+También agregué confirmación antes de **actualizar** y **eliminar** una tarea. Ambas acciones se probaron en el emulador. [Evidencia de eliminación](evidencias/09_confirmacion_eliminar.png).
 
-La aplicación fallaba al entrar a Task List porque faltaba registrar `TaskListActivity`. Agregué la actividad al manifiesto.
+## Fase 1. Estadísticas
 
-**Antes:**
+Creé `TaskStatsActivity` para mostrar el total de tareas, su cantidad por estado y el porcentaje completado con una barra de progreso. Los cálculos se realizan desde `TaskViewModel`.
 
-![Manifest antes](evidencias/01_manifest_antes.png)
+![Pantalla de estadísticas](evidencias/10_estadisticas.png)
 
-**Después:**
+## Fase 2. Búsqueda y filtros
 
-![Manifest después](evidencias/01_manifest_despues.png)
+Agregué una búsqueda por texto y un filtro por estado (`TODAS`, `PENDING`, `IN_PROGRESS`, `COMPLETED`, `CANCELLED`). Los dos filtros pueden utilizarse al mismo tiempo y actualizan la lista en tiempo real.
 
-### Error 2. El calendario mostraba mal el mes
+**Estados disponibles:**
 
-**Archivo:** `TaskActivity.kt`
+![Opciones de filtro](evidencias/11_opciones_filtro.png)
 
-El calendario contaba los meses desde cero. Sumé `1` al mes cuando se muestra la fecha, para que aparezca el mes correcto.
+**Filtro por estado:**
 
-![Mes corregido](evidencias/02_calendario_mes_corregido.png)
+![Filtro de tareas pendientes](evidencias/12_filtro_pendientes.png)
 
-### Error 3. Formato incorrecto de la fecha
+**Búsqueda por texto:**
 
-**Archivo:** `util.kt`
+![Búsqueda de tarea](evidencias/13_busqueda_texto.png)
 
-La función usaba un formato fijo para leer las fechas. Lo cambié para que utilice el formato recibido en `pattern`.
+## Fase 3. Eliminar deslizando y deshacer
 
-**Antes:**
+Implementé el deslizamiento de tareas hacia la izquierda o derecha para eliminarlas. Después aparece un mensaje con la opción **DESHACER** para restaurar la tarea. Probado en el emulador, incluso con filtros activos.
 
-![Formato antes](evidencias/03_formato_fecha_antes.png)
-
-**Después:**
-
-![Formato después](evidencias/03_formato_fecha_despues.png)
-
-### Error 4. La aplicación podía fallar con una fecha inválida
-
-**Archivo:** `TaskActivity.kt`
-
-Se usaba `!!` aunque la fecha podía ser `null`. Agregué una validación y ahora se utiliza directamente `dueDate` cuando la fecha es válida.
-
-**Antes:**
-
-![Fecha antes](evidencias/04_fecha_nula_antes.png)
-
-**Validación:**
-
-![Validación de fecha](evidencias/04_fecha_nula_validacion.png)
-
-**Después:**
-
-![Fecha después](evidencias/04_fecha_nula_despues.png)
-
-### Error 5. Al editar, el calendario abría en otro mes
-
-**Archivo:** `TaskActivity.kt`
-
-Al cargar una tarea, el mes quedaba adelantado. Resté `1` a `monthValue` para abrir el calendario en el mes correcto.
-
-**Antes:**
-
-![Mes edición antes](evidencias/05_mes_edicion_antes.png)
-
-**Después:**
-
-![Mes edición después](evidencias/05_mes_edicion_despues.png)
-
-### Error 6. El formulario quedaba en modo edición
-
-**Archivo:** `TaskActivity.kt`
-
-Después de limpiar el formulario, seguía activado el modo edición. Cambié `isEditMode` a `false` para poder registrar tareas nuevas.
-
-**Antes:**
-
-![Modo edición antes](evidencias/06_modo_edicion_antes.png)
-
-**Después:**
-
-![Modo edición después](evidencias/06_modo_edicion_despues.png)
-
-### Error 7. La lista repetía tareas
-
-**Archivo:** `TaskListAdapter.kt`
-
-Se restaba `1` a la posición de algunas tareas y se repetían en pantalla. Cambié el acceso a `tasks[position]`.
-
-**Antes:**
-
-![Lista antes](evidencias/07_lista_antes.png)
-
-**Después:**
-
-![Lista después](evidencias/07_lista_despues.png)
-
-### Error 8. Se enviaba el título en vez del ID
-
-**Archivo:** `TaskListActivity.kt`
-
-Al seleccionar una tarea se enviaba el título, pero la búsqueda utilizaba el ID. Cambié `task.title` por `task.id`.
-
-**Antes:**
-
-![Identificador antes](evidencias/08_identificador_antes.png)
-
-**Después:**
-
-![Identificador después](evidencias/08_identificador_despues.png)
-
-### Confirmación al eliminar y actualizar
-
-Agregué una pregunta de confirmación antes de eliminar una tarea, para evitar borrarla por accidente. También se agregó una confirmación para actualizar una tarea existente.
-
-![Confirmación al eliminar](evidencias/09_confirmacion_eliminar.png)
-
-> **Evidencia pendiente:** agregar aquí una captura del diálogo de confirmación al **actualizar** una tarea.
+**Evidencia pendiente:** captura con el mensaje **DESHACER** visible.
 
 ---
 
-## Fase 1: Estadísticas
-
-**Pendiente de desarrollar.** Agregaré las capturas y una explicación corta cuando termine `TaskStatsActivity`.
-
-## Fase 2: Búsqueda y filtros
-
-**Pendiente de desarrollar.** Agregaré la búsqueda por texto y el filtro por estado.
-
-## Fase 3: Eliminar deslizando y deshacer
-
-**Pendiente de desarrollar.** Agregaré las evidencias de Swipe to Delete y DESHACER.
+**Resultado:** la aplicación compila y las funcionalidades solicitadas se probaron en el emulador Android. Falta adjuntar la captura de confirmación al actualizar y la del mensaje **DESHACER** para completar las evidencias.
