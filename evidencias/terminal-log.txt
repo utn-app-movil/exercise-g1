@@ -138,3 +138,31 @@ PS>git add .
 PS>git commit -m "Paso 5: IDataManager y MemoryDataManager"
 
 ]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>.\gradlew assembleDebug
+PS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> git add .
+warning: in the working copy of 'app/src/main/java/cr/ac/utn/census/data/IDataManager.kt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/src/main/java/cr/ac/utn/census/data/MemoryDataManager.kt', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> git commit -m "Paso 5: IDataManager y MemoryDataManager"
+[census-inicio a2c92cf] Paso 5: IDataManager y MemoryDataManager
+ 3 files changed, 67 insertions(+)
+ create mode 100644 app/src/main/java/cr/ac/utn/census/data/IDataManager.kt
+ create mode 100644 app/src/main/java/cr/ac/utn/census/data/MemoryDataManager.kt
+PS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> .\gradlew assembleDebug
+Calculating task graph as no cached configuration is available for tasks: assembleDebug
+
+BUILD SUCCESSFUL in 10s
+34 actionable tasks: 9 executed, 25 up-to-date
+Configuration cache entry stored.
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git log --oneline
+a2c92cf (HEAD -> census-inicio) Paso 5: IDataManager y MemoryDataManager
+8d6cd3f Paso 4: entidad Person
+7488c9a Paso 2: textos fijos pasados a strings.xml
+b3df015 Paso 1: renombrar proyecto a Census
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git add .
+warning: in the working copy of 'evidencias/terminal-log.txt', LF will be replaced by CRLF the next time Git touches it
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git commit -m "Paso 5: IDataManager y MemoryDataManager"
+
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
