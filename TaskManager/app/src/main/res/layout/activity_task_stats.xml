@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estadísticas de Tareas"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Total de Tareas -->
+    <TextView
+        android:id="@+id/tvTotalTasks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total de Tareas: 0"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Desglose por Estados -->
+    <TextView
+        android:id="@+id/tvPending"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pendientes (PENDING): 0"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvInProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="En Progreso (IN_PROGRESS): 0"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvCompleted"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Completadas (COMPLETED): 0"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvCancelled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Canceladas (CANCELLED): 0"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp"/>
+
+    <!-- Barra de progreso de completadas -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Porcentaje Completadas:"
+        android:textSize="14sp"
+        android:layout_marginBottom="4dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressCompleted"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:max="100"
+        android:progress="0"
+        android:layout_marginBottom="32dp"/>
+
+    <!-- Botón para volver -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Volver al Menú Principal"/>
+
+</LinearLayout>
