@@ -246,7 +246,8 @@ class TaskActivity : AppCompatActivity(),
                         , Toast.LENGTH_LONG).show()
                 }
             }else{
-                Toast.makeText(this, "Datos incompletos"
+                // CAMBIO: antes era el texto fijo "Datos incompletos"
+                Toast.makeText(this, getString(R.string.TextIncompleteData)
                     , Toast.LENGTH_LONG).show()
             }
         }catch (e: Exception){

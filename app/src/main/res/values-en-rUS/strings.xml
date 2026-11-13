@@ -33,4 +33,12 @@
     <string name="TextNo">No</string>
     <string name="TextDataNoFound">The information was not found.</string>
     <string name="TextTitleDialogQuestion">Question</string>
+    <!-- CAMBIO: antes estaba escrito en MainActivity.kt -->
+    <string name="TextCancelledAction">Cancelled action</string>
+    <!-- CAMBIO: antes estaba escrito en TaskActivity.kt -->
+    <string name="TextIncompleteData">Incomplete data</string>
+    <!-- CAMBIO: antes eran "Item" fijos en crud_actions.xml -->
+    <string name="mnuTextSave">Save</string>
+    <string name="mnuTextDelete">Delete</string>
+    <string name="mnuTextCancel">Cancel</string>
 </resources>
