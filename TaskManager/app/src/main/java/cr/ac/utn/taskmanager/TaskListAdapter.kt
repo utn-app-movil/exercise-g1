@@ -21,8 +21,17 @@ class TaskListAdapter (private var tasks: List<Task>,
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val item = if (position > 0) tasks[position - 1] else tasks[position]
+        val item = tasks[position]
         holder.bind(item, itemClickListener)
+    }
+
+    fun updateTasks(tasks: List<Task>) {
+        this.tasks = tasks
+        notifyDataSetChanged()
+    }
+
+    fun getTask(position: Int): Task {
+        return tasks[position]
     }
 
     override fun getItemCount(): Int {
