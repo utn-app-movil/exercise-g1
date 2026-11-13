@@ -99,14 +99,24 @@ class TaskActivity : AppCompatActivity(),
         inflater.inflate(R.menu.crud_actions, menu)
         menuDelete = menu!!.findItem(R.id.mnuDelete)
         menuDelete.isVisible = isEditMode
-        invalidateOptionsMenu()
         return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        menu.findItem(R.id.mnuDelete).isVisible = isEditMode
+        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mnuSave -> {
-                saveTask()
+                if (isEditMode) {
+                    util.showDialogCondition(this, "¿Desea actualizar esta tarea?") {
+                        saveTask()
+                    }
+                } else {
+                    saveTask()
+                }
                 return true
             }
             R.id.mnuDelete -> {

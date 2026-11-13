@@ -1,92 +1,80 @@
-# Resolución de práctica — TaskManager (avance parcial)
+# Resolución de práctica - TaskManager
 
-**Estudiante:** Pablo Aguerp 
-**Curso:** Desarrollo de Aplicaciones Móviles  
-**Repositorio base:** https://github.com/utn-app-movil/exercise-g1  
-**Fecha:** 6 de noviembre de 2026  
-**Estado:** Fase 0 en desarrollo. Los cambios documentados aquí son evidencias de revisión/código, no una certificación de que todas las pruebas pasaron.
+**Estudiante:** Pablo Aguerp
 
-## Objetivo
+**Curso:** Desarrollo de Aplicaciones Móviles
 
-Durante esta práctica revisé errores del proyecto TaskManager en Kotlin. Utilicé Android Studio para identificar fallos en el inicio de pantallas, selección de fechas, búsqueda de tareas y operaciones de edición y eliminación. Adjunto capturas de Logcat y comparaciones de código. Las pruebas funcionales pendientes se registran expresamente.
+**Rama:** Pablo
 
-## 1. Error al abrir la lista de tareas
+**Fecha de actualización:** 12 de noviembre de 2026
 
-**Archivo:** `TaskManager/app/src/main/AndroidManifest.xml`  
-**Diagnóstico:** al intentar abrir `TaskListActivity`, Logcat presentó `ActivityNotFoundException`. La actividad no estaba registrada en el manifiesto.  
-**Solución aplicada o por verificar:** declarar `<activity android:name=".TaskListActivity" android:exported="false" />` dentro de `<application>`.  
-**Prueba pendiente:** mostrar captura de la lista abriéndose sin cierre inesperado.
+## Fase 0: errores y correcciones
 
-![Logcat del error ActivityNotFoundException](evidencias/01_logcat_activity_not_found.png)
+| Problema | Corrección |
+| --- | --- |
+| La lista no abría y mostraba `ActivityNotFoundException`. | Se registró `TaskListActivity` en `AndroidManifest.xml`. |
+| El adaptador repetía la tarea anterior con `position - 1`. | Se usa `tasks[position]`. |
+| Las fechas se interpretaban como `MM/dd/yyyy`. | `parseStringToDateModern` usa el parámetro `pattern`, que recibe `dd/MM/yyyy` desde el formulario. |
+| El selector mostraba un mes menos. | Al mostrar la fecha se usa `month + 1`, porque el selector empieza los meses en cero. |
+| Al editar, el calendario abría un mes después. | Se carga `dueMonth = task.dueDate.monthValue - 1`. |
+| Al tocar una tarea se enviaba el título en lugar del identificador. | Se envía `task.id` en el `Intent`. |
+| Después de limpiar el formulario seguía activo el modo edición. | `cleanScreen()` deja `isEditMode = false` y habilita el identificador. |
+| En el tema nocturno no aparecía la barra con las acciones. | Se usa `Theme.MaterialComponents.DayNight.DarkActionBar`, igual que en el tema normal. |
 
-## 2. Desplazamiento incorrecto en la lista
+También se quitó `invalidateOptionsMenu()` de `onCreateOptionsMenu()`. La visibilidad de eliminar se actualiza en `onPrepareOptionsMenu()` según el modo edición.
 
-**Archivo:** `TaskListAdapter.kt`, método `onBindViewHolder()`.  
-**Causa identificada en el código base:** la expresión `tasks[position - 1]` para posiciones mayores de cero repetía elementos.  
-**Solución propuesta:** utilizar `tasks[position]`.  
-**Evidencia pendiente:** capturas antes/después del adaptador y prueba de la lista con varias tareas.
+### Evidencias anteriores de depuración
 
-## 3. Errores al interpretar fechas
+Estas capturas ya estaban en la rama y corresponden a la revisión inicial.
 
-**Archivos:** `util.kt` y `TaskActivity.kt`.  
-**Error observado en Logcat durante la práctica:** `DateTimeParseException` al interpretar `27/11/2026` como si el número 27 correspondiera al mes.  
-**Causa:** la función utilizaba `MM/dd/yyyy` mientras el formulario enviaba fechas `dd/MM/yyyy`.  
-**Corrección mostrada:** usar el argumento `pattern` en `DateTimeFormatter.ofPattern(pattern, Locale.getDefault())` en lugar de un formato fijo.
+![Error al abrir la lista en Logcat](evidencias/01_logcat_activity_not_found.png)
 
-**Antes:**
+Formato de fecha antes y después:
 
-![Formato fijo en util.kt](evidencias/03_formato_fecha_antes.png)
+![Formato fijo incorrecto](evidencias/03_formato_fecha_antes.png)
+![Uso del formato recibido por parámetro](evidencias/04_formato_fecha_despues.png)
 
-**Después:**
+Identificador enviado al abrir la tarea:
 
-![Formato por parámetro en util.kt](evidencias/04_formato_fecha_despues.png)
+![Envío del título](evidencias/05_click_titulo_antes.png)
+![Envío del identificador](evidencias/06_click_id_despues.png)
 
-**Atención — selector de fechas:** la captura siguiente **no representa una corrección válida**: muestra `dayOfMonth + 1` en vez de `month + 1`. El día no debe incrementarse. Se debe conservar `dueDay = dayOfMonth`, `dueMonth = month` y mostrar la fecha mediante `getDateFormatString(dayOfMonth, month + 1, year)`. Al precargar el calendario desde una fecha guardada debe usarse `task.dueDate.monthValue - 1` para `dueMonth`.
+Las imágenes `02_selector_fecha_revisar.png` y `07_clean_screen_pendiente.png` muestran intentos anteriores incorrectos. No representan el código final: no se suma uno al día y el modo edición queda en `false` al limpiar.
 
-![Selector de fechas con ajuste incorrecto por revisar](evidencias/02_selector_fecha_revisar.png)
+### Confirmaciones
 
-**Pruebas pendientes:** guardar y volver a abrir una tarea con fecha 27/11/2026, y comprobar el mes al editarla.
+Se utiliza `util.showDialogCondition()` antes de actualizar y eliminar. Si se responde No, no se modifica la tarea. Al crear una tarea nueva se guarda directamente.
 
-## 4. Búsqueda incorrecta al seleccionar una tarea
+![Confirmación de actualización en el emulador](evidencias/13_confirmacion_actualizar.png)
 
-**Archivo:** `TaskListActivity.kt`, método `onItemClick()`.  
-**Causa:** se enviaba `task.title` mediante `EXTRA_MESSAGE_ID`, pero el formulario buscaba por `task.id`.  
-**Corrección mostrada:** enviar `task.id`.
+## Fase 1: estadísticas
 
-**Antes:**
+Se agregó `TaskStatsActivity` con su XML y un botón en el menú principal. Muestra el total, la cantidad por cada estado y una barra horizontal con el porcentaje completado. Los cálculos están en `TaskViewModel` y utilizan `count`. Cuando no hay tareas, el porcentaje es cero para evitar dividir entre cero. El botón Volver cierra la pantalla y regresa al menú.
 
-![Título enviado erróneamente](evidencias/05_click_titulo_antes.png)
+![Cuatro tareas, una por estado y 25% completado](evidencias/10_estadisticas.png)
 
-**Después:**
+## Fase 2: búsqueda y filtros
 
-![Identificador enviado correctamente](evidencias/06_click_id_despues.png)
+La lista tiene un `SearchView` y un `Spinner` con TODAS y los cuatro estados. `filterTasks()` en el ViewModel combina el texto del título o descripción con el estado seleccionado. La búsqueda ignora mayúsculas y minúsculas. La lista también se actualiza en `onResume()` al regresar del formulario.
 
-**Prueba pendiente:** seleccionar una tarea y confirmar que se recupera el registro correcto.
+![Búsqueda por texto y estado COMPLETED](evidencias/11_filtro_combinado.png)
 
-## 5. El formulario permanece en modo edición
+## Fase 3: deslizar para eliminar
 
-**Archivo:** `TaskActivity.kt`, método `cleanScreen()`.  
-**Causa:** se usa `isEditMode = true` después de limpiar campos. Eso conserva el modo edición y puede afectar el guardado de nuevas tareas.  
-**Corrección requerida:** reemplazar por `isEditMode = false` y conservar la actualización de menú con `invalidateOptionsMenu()`.
+Se agregó `ItemTouchHelper.SimpleCallback`. Al deslizar una fila se elimina la tarea que está visible en esa posición y aparece un `Snackbar` con DESHACER. Al pulsarlo se guarda de nuevo la misma tarea y se aplican los filtros actuales.
 
-**Importante:** la imagen recibida todavía muestra `isEditMode = true`; por tanto es evidencia del problema, **no del arreglo**.
+![Tarea eliminada con opción de deshacer](evidencias/12_eliminar_deshacer.png)
 
-![cleanScreen con isEditMode todavía en true](evidencias/07_clean_screen_pendiente.png)
+## Comprobaciones
 
-**Pendiente:** agregar captura del código corregido y prueba de creación de dos tareas consecutivas.
+- Compilación `assembleDebug` y pruebas `testDebugUnitTest`: correctas.
+- Pruebas instrumentadas en Pixel 7 Pro con Android 13: estadísticas vacías, cuatro tareas con 25% completado, navegación desde el menú, búsqueda por descripción sin distinguir mayúsculas, combinación sin resultados, filtro por estado y eliminar/deshacer con filtro activo.
+- Se comprobó la carga por identificador, la fecha 27/11/2026, cancelar y aceptar una actualización, limpiar el formulario y cancelar y aceptar una eliminación.
 
-## 6. Confirmación antes de actualizar o eliminar
+Las capturas 10 a 13 se obtuvieron durante las pruebas instrumentadas con datos de ejemplo. Son evidencia funcional; no son capturas de breakpoints de Android Studio. No se volvió a comprobar manualmente el tema nocturno ni todos los casos de la depuración inicial.
 
-**Archivo:** `TaskActivity.kt`, método `onOptionsItemSelected()`.  
-**Requisito del README principal:** mostrar un diálogo de verificación antes de **actualizar y eliminar**.  
-**Estado de la evidencia:** la captura del código posterior muestra `util.showDialogCondition(...)` para **eliminar**. Sin embargo, en esa misma captura `mnuSave` continúa llamando directamente a `saveTask()`, por lo que **no se demuestra una confirmación para actualizar**.
+Se conservó la estructura del proyecto de clase: Activities, XML, ViewModel y repositorio en memoria. No se agregaron dependencias. Las tareas se pierden al finalizar el proceso de la aplicación, igual que en el proyecto base.
 
-**Antes:**
+## Entrega
 
-![Acciones sin confirmación](evidencias/08_acciones_antes.png)
-
-**Avance aportado (solo eliminar):**
-
-![Código de confirmación para eliminar](evidencias/09_confirmacion_eliminar_codigo.png)
-
-
+PR de la rama Pablo hacia main: https://github.com/utn-app-movil/exercise-g1/pull/10

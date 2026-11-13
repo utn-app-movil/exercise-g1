@@ -28,6 +28,15 @@ class TaskListAdapter (private var tasks: List<Task>,
         holder.bind(item, itemClickListener)
     }
 
+    fun updateTasks(newTasks: List<Task>) {
+        tasks = newTasks
+        notifyDataSetChanged()
+    }
+
+    fun getTask(position: Int): Task {
+        return tasks[position]
+    }
+
     override fun getItemCount(): Int {
         return tasks.size
     }
