@@ -9,19 +9,19 @@ import androidx.recyclerview.widget.RecyclerView
 import cr.ac.utn.taskmanager.domain.model.Task
 
 class TaskListAdapter (private var tasks: List<Task>,
-                        val itemClickListener: OnItemClickListener):
-                    RecyclerView.Adapter<CustomViewHolder>()
+                       val itemClickListener: OnItemClickListener):
+    RecyclerView.Adapter<CustomViewHolder>()
 {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
             CustomViewHolder {
         val itemView = LayoutInflater.from(parent.context).
-                inflate(R.layout.activity_task_item,
-                        parent, false)
+        inflate(R.layout.activity_task_item,
+            parent, false)
         return CustomViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val item = if (position > 0) tasks[position - 1] else tasks[position]
+        val item = tasks[position]
         holder.bind(item, itemClickListener)
     }
 

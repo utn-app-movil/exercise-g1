@@ -27,9 +27,10 @@ import cr.ac.utn.taskmanager.util.util
 import cr.ac.utn.taskmanager.viewmodel.TaskViewModel
 import java.time.LocalDate
 import java.util.Calendar
+import androidx.appcompat.app.AlertDialog
 
 class TaskActivity : AppCompatActivity(),
-            DatePickerDialog.OnDateSetListener{
+    DatePickerDialog.OnDateSetListener{
 
     private lateinit var txtId: EditText
     private lateinit var txtTitle: EditText
@@ -86,12 +87,12 @@ class TaskActivity : AppCompatActivity(),
     }
 
     override fun onDateSet(view: android.widget.DatePicker?, year: Int
-                            , month: Int, dayOfMonth: Int) {
+                           , month: Int, dayOfMonth: Int) {
         dueDay=dayOfMonth
         dueMonth=month
         dueYear=year
         tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+            month, year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -105,14 +106,40 @@ class TaskActivity : AppCompatActivity(),
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+
             R.id.mnuSave -> {
-                saveTask()
+                if (isEditMode && isValidationData()) {
+                    AlertDialog.Builder(this)
+                        .setTitle("Actualizar tarea")
+                        .setMessage("¿Está seguro de que desea guardar los cambios?")
+                        .setPositiveButton("Actualizar") { dialog, which ->
+                            saveTask()
+                        }
+                        .setNegativeButton("Cancelar") { dialog, which ->
+                            dialog.dismiss()
+                        }
+                        .show()
+                } else {
+                    saveTask()
+                }
                 return true
             }
+
             R.id.mnuDelete -> {
-                deleteTask()
+                AlertDialog.Builder(this)
+                    .setTitle("Eliminar tarea")
+                    .setMessage("¿Está seguro de que desea eliminar esta tarea?")
+                    .setPositiveButton("Eliminar") { dialog, which ->
+                        deleteTask()
+                    }
+                    .setNegativeButton("Cancelar") { dialog, which ->
+                        dialog.dismiss()
+                    }
+                    .show()
+
                 return true
             }
+
             R.id.mnuCancel -> {
                 cleanScreen()
                 return true
@@ -190,7 +217,7 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=true
+        isEditMode= false
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
