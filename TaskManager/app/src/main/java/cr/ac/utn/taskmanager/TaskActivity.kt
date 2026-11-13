@@ -91,7 +91,7 @@ class TaskActivity : AppCompatActivity(),
         dueMonth=month
         dueYear=year
         tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+             month +1, year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -99,18 +99,33 @@ class TaskActivity : AppCompatActivity(),
         inflater.inflate(R.menu.crud_actions, menu)
         menuDelete = menu!!.findItem(R.id.mnuDelete)
         menuDelete.isVisible = isEditMode
-        invalidateOptionsMenu()
         return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        menu.findItem(R.id.mnuDelete).isVisible = isEditMode
+        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.mnuSave -> {
-                saveTask()
+                if (isEditMode) {
+                    util.showDialogCondition(this, "¿Desea actualizar esta tarea?") {
+                        saveTask()
+                    }
+                } else {
+                    saveTask()
+                }
                 return true
             }
             R.id.mnuDelete -> {
-                deleteTask()
+                util.showDialogCondition(
+                    this,
+                    "¿Está seguro de que desea eliminar esta tarea?"
+                ) {
+                    deleteTask()
+                }
                 return true
             }
             R.id.mnuCancel -> {
@@ -170,7 +185,7 @@ class TaskActivity : AppCompatActivity(),
                     task.dueDate.monthValue, task.dueDate.year)
                 tvDueDate.setText(dueDateStr)
                 dueDay = task.dueDate.dayOfMonth
-                dueMonth = task.dueDate.monthValue
+                dueMonth = task.dueDate.monthValue - 1
                 dueYear = task.dueDate.year
                 invalidateOptionsMenu()
             }else{
@@ -190,7 +205,7 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=true
+        isEditMode=false
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
