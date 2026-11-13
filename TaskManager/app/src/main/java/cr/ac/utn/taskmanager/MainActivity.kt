@@ -63,5 +63,11 @@ class MainActivity : AppCompatActivity() {
             util.openActivity(this
                 , TaskListActivity::class.java)
         })
+
+        val btnOpenTaskStats: Button = findViewById<Button>(R.id.btnTaskStats_main)
+        btnOpenTaskStats.setOnClickListener(View.OnClickListener{ view ->
+            util.openActivity(this
+                , TaskStatsActivity::class.java)
+        })
     }
 }

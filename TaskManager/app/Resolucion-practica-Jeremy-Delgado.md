@@ -9,21 +9,29 @@ Resolución de la práctica — Jeremy Delgado.
 
 ## Error 1
 
-**Problema:** Fecha atrasada un mes. El mes se mostraba incorrectamente porque no se estaba sumando 1 al formatear la fecha. Además, `parseStringToDateModern` ignoraba el parámetro `pattern` y utilizaba un formato fijo.
+**Problema:** Fecha atrasada un mes. El mes se mostraba incorrectamente porque no se estaba sumando 1 al formatear la fecha.
 
-![Captura: calendario mostrando el mes incorrecto](img/img1_Error1)
+![Captura: calendario mostrando el mes incorrecto](img/img1_Error1.png)
 
 ![Captura: fecha mostrada en el campo Due Date](img/img2_Error1.png)
 
-**Solución:** Se cambió el formato fijo de la fecha para que reciba el parámetro `pattern`. En la función `onDateSet`, dentro de su función interna `getDateFormatString`, al parámetro `monthValue` se le añadió un `+ 1` para que indique el mes correcto.
-
-![Código: parseStringToDateModern usando el parámetro pattern](img/img3_Error1.png)
+**Solución:** En la función `onDateSet`, dentro de su función interna `getDateFormatString`, al parámetro `monthValue` se le añadió un `+ 1` para que indique el mes correcto.
 
 ![Código: onDateSet con monthValue = month + 1](img/img4_Error1.png)
 
 ---
 
 ## Error 2
+
+**Problema:** `parseStringToDateModern` ignoraba el parámetro `pattern` y utilizaba un formato fijo.
+
+**Solución:** Se cambió el formato fijo de la fecha para que reciba el parámetro `pattern`.
+
+![Código: parseStringToDateModern usando el parámetro pattern](img/img3_Error1.png)
+
+---
+
+## Error 3
 
 **Problema:** `TaskListActivity` se cerraba porque no estaba declarado en el manifest.
 
@@ -33,7 +41,7 @@ Resolución de la práctica — Jeremy Delgado.
 
 ---
 
-## Error 3
+## Error 4
 
 **Problema:** Al guardar una task y buscarla con el id, al modificar su campo fecha el calendario inicia en enero o un mes adelantado, y no en su mes guardado.
 
@@ -47,7 +55,7 @@ Resolución de la práctica — Jeremy Delgado.
 
 ---
 
-## Error 4
+## Error 5
 
 **Problema:** Al abrir una tarea desde `TaskListActivity` se enviaba el `title` en lugar del `id` de la Task.
 
@@ -65,64 +73,64 @@ Resolución de la práctica — Jeremy Delgado.
 
 ---
 
-## Error 5
+## Error 6
 
 **Problema:** Al guardar las tareas, en `TaskList` se mostraba la Task 1 con sus datos correctos, pero la segunda también mostraba los datos de la Task 1.
 
-![Código: onBindViewHolder con el cálculo de posición original](img/error-5-codigo-original.png)
+![Código: onBindViewHolder con el cálculo de posición original](img/img1_Error5.png)
 
-![Captura: datos de la Task 1](img/error-5-task-1.png)
+![Captura: datos de la Task 1](img/img2_Error5.png)
 
-![Captura: datos de la Task 2](img/error-5-task-2.png)
+![Captura: datos de la Task 2](img/img3_Error5.png)
 
-![Captura: lista mostrando datos repetidos de la Task 1](img/error-5-lista-repetida.png)
+![Captura: lista mostrando datos repetidos de la Task 1](img/img4_Error5.png)
 
 **Solución:** Mostrar los datos solo por la posición.
 
-![Código: onBindViewHolder con val item = tasks[position]](img/error-5-codigo-solucion.png)
+![Código: onBindViewHolder con val item = tasks[position]](img/img5_Error5.png)
 
-![Captura: lista mostrando cada tarea con sus datos correctos](img/error-5-lista-correcta.png)
-
----
-
-## Error 6
-
-**Problema:** En `TaskActivity`, la función `cleanScreen` deja activado el modo de edición. Después del clear screen (que ocurre al presionar el botón X) se puede guardar una Task nueva con un id ya existente.
-
-![Código: cleanScreen con isEditMode = true](img/error-6-codigo-clean-screen.png)
-
-![Captura: formulario con datos antes de limpiar](img/error-6-formulario-1.png)
-
-![Captura: formulario después de limpiar y guardar con id existente](img/error-6-formulario-2.png)
-
-![Captura: mensaje "Information was saved successfully"](img/error-6-mensaje-guardado.png)
-
-**Solución:** Cambiar el valor de la variable `isEditMode` por `false` para que entre a validar si ya existe una tarea con ese id.
-
-![Captura: validación al intentar guardar un id ya existente](img/error-6-validacion.png)
-
-![Captura: resultado final tras la corrección](img/error-6-resultado.png)
+![Captura: lista mostrando cada tarea con sus datos correctos](img/img6_Error5.png)
 
 ---
 
 ## Error 7
 
-**Problema:**
+**Problema:** En `TaskActivity`, la función `cleanScreen` deja activado el modo de edición. Después del clear screen (que ocurre al presionar el botón X) se puede guardar una Task nueva con un id ya existente.
 
-![Captura del error 7](img/error-7-problema.png)
+![Código: cleanScreen con isEditMode = true](img/img1_Error6.png)
 
-**Solución:**
+![Captura: formulario con datos antes de limpiar](img/img2_Error6.png)
 
-![Captura de la solución del error 7](img/error-7-solucion.png)
+![Captura: formulario después de limpiar y guardar con id existente](img/img3_Error6.png)
+
+![Captura: mensaje "Information was saved successfully"](img/img4_Error6.png)
+
+**Solución:** Cambiar el valor de la variable `isEditMode` por `false` para que entre a validar si ya existe una tarea con ese id.
+
+![Captura: validación al intentar guardar un id ya existente](img/img5_Error6.png)
+
+![Captura: resultado final tras la corrección](img/img6_Error6.png)
 
 ---
 
 ## Error 8
 
-**Problema:**
+**Problema:** Al editar o eliminar una tarea abierta desde `TaskListActivity`, al volver a la lista la fila sigue mostrando los datos anteriores. `TaskListActivity` crea el adapter una sola vez en `onCreate` y nunca lo refresca ni llama a `notifyDataSetChanged()`, aunque `TaskMemoryManager` sí actualiza la lista en memoria. Para que pase el error hay que abrir la tarea desde task list presionar la tarjeta, editar la info como title o estado y volver con la fecha del back del sistema, no con la flecha de la app.
 
-![Captura del error 8](img/error-8-problema.png)
+![Captura: lista con la tarea antes de editarla](img/img1_Error8.png)
 
-**Solución:**
+![Captura: TaskActivity con los datos modificados](img/img2_Error8.png)
 
-![Captura de la solución del error 8](img/error-8-solucion.png)
+![Captura: al volver con Back, la lista sigue mostrando los datos viejos](img/img3_Error8.png)
+
+![Captura: al rotar la pantalla aparecen los datos nuevos](img/img4_Error8.png)
+
+![Captura: tarea que se elimina](img/img5_Error8.png)
+
+![Captura: tarea que se elimina, sigue apareciendo en la lista](img/img6_Error8.png)
+
+![Captura: se entra nuevamente a la tarjeta y los datos no se encuntran](img/img7_Error8.png)
+
+**Solución:** Guardar el adapter en una variable de la clase y, en  onResume , llamar a  notifyDataSetChanged()  para que la lista se actualice al volver de  TaskActivity .
+
+![Código: refresco de la lista en onResume con notifyDataSetChanged](img/img8_Error8.png)

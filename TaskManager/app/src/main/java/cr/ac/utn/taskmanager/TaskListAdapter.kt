@@ -28,6 +28,21 @@ class TaskListAdapter (private var tasks: List<Task>,
     override fun getItemCount(): Int {
         return tasks.size
     }
+
+    fun setFilteredTasks(nuevaLista: List<Task>) {
+        this.tasks = nuevaLista
+        notifyDataSetChanged()
+    }
+
+    fun getTaskAt(position: Int): Task {
+        return tasks[position]
+    }
+
+
+    fun removeTaskAt(position: Int) {
+        tasks = tasks.filterIndexed { index, _ -> index != position }
+        notifyItemRemoved(position)
+    }
 }
 
 class CustomViewHolder(view: View): RecyclerView.ViewHolder(view)
