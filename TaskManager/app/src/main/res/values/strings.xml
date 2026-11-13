@@ -30,6 +30,13 @@
     <string name="TextNo">No</string>
     <string name="TextDataNoFound">La información no existe.</string>
     <string name="TextTitleDialogQuestion">Pregunta</string>
+    <string name="TextStatsTitle">Estadísticas</string>
+    <string name="TextStatsTotal">Total de tareas</string>
+    <string name="TextStatsPending">Pendientes</string>
+    <string name="TextStatsInProgress">En progreso</string>
+    <string name="TextStatsCompleted">Completadas</string>
+    <string name="TextStatsCancelled">Canceladas</string>
+    <string name="TextStatsBack">Volver al menú principal</string>
 
 
 </resources>
