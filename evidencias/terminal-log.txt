@@ -1,0 +1,26 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20261113123238
+Nombre de usuario: PE_CE_A_AND_B\berny
+Usuario RunAs: PE_CE_A_AND_B\berny
+Nombre de la configuración: 
+Máquina: PE_CE_A_AND_B (Microsoft Windows NT 10.0.26200.0)
+Aplicación host: powershell.exe -NoExit -ExecutionPolicy Bypass -File C:\Program Files\Android\Android Studio\plugins\terminal\shell-integrations\powershell\powershell-integration.ps1
+Id. de proceso: 2588
+PSVersion: 5.1.26100.9818
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9818
+BuildVersion: 10.0.26100.9818
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+La transcripción ha comenzado. El archivo de salida es evidencias\terminal-log.txt
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git add .
+
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git commit -m "Paso 4: entidad Person"
+
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
