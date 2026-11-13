@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import cr.ac.utn.taskmanager.data.memory.TaskMemoryManager
 import cr.ac.utn.taskmanager.domain.model.Task
 import cr.ac.utn.taskmanager.domain.repository.ITaskRepository
+import cr.ac.utn.taskmanager.domain.model.TaskStatus
 
 class TaskViewModel: ViewModel() {
     companion object{
@@ -30,6 +31,32 @@ class TaskViewModel: ViewModel() {
 
         fun removeTask(id: String){
             repository.deleteTask(id)
+        }
+
+        fun getTotalTasks(): Int{
+            return repository.getTasks().size
+        }
+
+        fun countByStatus(status: TaskStatus): Int{
+            return repository.getTasks().count { it.status == status }
+        }
+
+        fun getCompletedPercentage(): Int{
+            val total = getTotalTasks()
+            if (total == 0) return 0
+            val completed = repository.getTasks()
+                .filter { it.status == TaskStatus.COMPLETED }.size
+            return completed * 100 / total
+        }
+
+        fun filterTasks(text: String, status: TaskStatus?): List<Task>{
+            return repository.getTasks().filter { task ->
+                val matchesText = text.isBlank() ||
+                        task.title.contains(text, ignoreCase = true) ||
+                        task.description.contains(text, ignoreCase = true)
+                val matchesStatus = status == null || task.status == status
+                matchesText && matchesStatus
+            }
         }
     }
 

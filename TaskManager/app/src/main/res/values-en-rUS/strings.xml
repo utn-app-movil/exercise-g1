@@ -32,4 +32,17 @@
     <string name="TextNo">No</string>
     <string name="TextDataNoFound">The information was not found.</string>
     <string name="TextTitleDialogQuestion">Question</string>
+
+    <!-- Task statistics screen (TaskStatsActivity) and the button that opens it -->
+    <string name="btnTextStats_main">Statistics</string>
+    <string name="TextStatsTotal">Total registered tasks</string>
+    <string name="TextCompletedProgress">Percentage of completed tasks</string>
+    <string name="TextBackToMenu">Back to main menu</string>
+    <string name="TextPending">Pending: %1$d</string>
+    <string name="TextInProgress">In progress: %1$d</string>
+    <string name="TextCompleted">Completed: %1$d</string>
+    <string name="TextCancelled">Cancelled: %1$d</string>
+    <string name="TextPercent">%1$d%%</string>
+    <string name="TextSearchHint">Search task</string>
+    <string name="TextTaskDeleted">Task deleted</string>
 </resources>
