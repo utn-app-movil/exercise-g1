@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Contenedor principal de la pantalla de registro de personas -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,30 +7,61 @@
     android:padding="24dp"
     android:gravity="center_horizontal">
 
+    <!-- T?tulo principal -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registro de Censo"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginBottom="32dp"/>
+        android:layout_marginBottom="20dp"/>
 
+    <!-- C?dula / Identificaci?n -->
     <EditText
         android:id="@+id/etPersonId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="C?dula / Identificaci?n"
         android:inputType="text"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="12dp"/>
 
+    <!-- Nombre -->
     <EditText
         android:id="@+id/etPersonName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre completo"
+        android:hint="Nombre"
         android:inputType="textPersonName"
-        android:layout_marginBottom="24dp"/>
+        android:layout_marginBottom="12dp"/>
 
+    <!-- Apellidos -->
+    <EditText
+        android:id="@+id/etPersonLastName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Apellidos"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Fecha de nacimiento -->
+    <EditText
+        android:id="@+id/etPersonBirthDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fecha de nacimiento"
+        android:inputType="text"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- Direcci?n -->
+    <EditText
+        android:id="@+id/etPersonAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Direcci?n"
+        android:inputType="text"
+        android:layout_marginBottom="20dp"/>
+
+    <!-- Bot?n de guardar -->
     <Button
         android:id="@+id/btnSavePerson"
         android:layout_width="match_parent"
