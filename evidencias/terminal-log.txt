@@ -24,3 +24,117 @@ PS>git add .
 PS>git commit -m "Paso 4: entidad Person"
 
 ]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>@'
+package cr.ac.utn.census.data
+
+import cr.ac.utn.census.entities.Person
+
+// Interface: contrato de almacenamiento. El controller depende de esta
+// interface y no de una clase concreta (principio D de SOLID)
+interface IDataManager {
+    fun getPersons(): List<Person>
+    fun getById(id: String): Person?
+    fun addPerson(person: Person)
+    fun updatePerson(person: Person)
+    fun deletePerson(id: String)
+}
+'@ | Set-Content -Path app\src\main\java\cr\ac\utn\census\data\IDataManager.kt -Encoding ASCII
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>type app\src\main\java\cr\ac\utn\census\data\IDataManager.kt.
+package cr.ac.utn.census.data
+
+import cr.ac.utn.census.entities.Person
+
+// Interface: contrato de almacenamiento. El controller depende de esta
+// interface y no de una clase concreta (principio D de SOLID)
+interface IDataManager {
+    fun getPersons(): List<Person>
+    fun getById(id: String): Person?
+    fun addPerson(person: Person)
+    fun updatePerson(person: Person)
+    fun deletePerson(id: String)
+}
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>@'
+package cr.ac.utn.census.data
+
+import cr.ac.utn.census.entities.Person
+
+// DataManager: guarda las personas en memoria (en una lista)
+class MemoryDataManager : IDataManager {
+    private val persons = mutableListOf<Person>()
+
+    override fun getPersons(): List<Person> = persons
+
+    override fun getById(id: String): Person? {
+        val result = persons.filter { it.id == id }
+        return if (result.any()) result[0] else null
+    }
+
+    override fun addPerson(person: Person) {
+        persons.add(person)
+    }
+
+    override fun updatePerson(person: Person) {
+        deletePerson(person.id)
+        addPerson(person)
+    }
+
+    override fun deletePerson(id: String) {
+        persons.removeIf { it.id == id }
+    }
+}
+'@ | Set-Content -Path app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt -Encoding ASCII
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt.
+app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt. : El módulo 'app' no pudo cargarse. Para obtener más 
+información, ejecute 'Import-Module app'.
+En línea: 1 Carácter: 1
++ app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt.
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (app\src\main\ja...DataManager.kt.:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CouldNotAutoLoadModule
+app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt. : El módulo 'app' no pudo cargarse. Para obtener más información, ejecute 'Import-Module app'.
+En línea: 1 Carácter: 1
++ app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt.
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (app\src\main\ja...DataManager.kt.:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CouldNotAutoLoadModule
+
+]1341;command_finished;exit_code=1;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>type app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt
+package cr.ac.utn.census.data
+
+import cr.ac.utn.census.entities.Person
+
+// DataManager: guarda las personas en memoria (en una lista)
+class MemoryDataManager : IDataManager {
+    private val persons = mutableListOf<Person>()
+
+    override fun getPersons(): List<Person> = persons
+
+    override fun getById(id: String): Person? {
+        val result = persons.filter { it.id == id }
+        return if (result.any()) result[0] else null
+    }
+
+    override fun addPerson(person: Person) {
+        persons.add(person)
+    }
+
+    override fun updatePerson(person: Person) {
+        deletePerson(person.id)
+        addPerson(person)
+    }
+
+    override fun deletePerson(id: String) {
+        persons.removeIf { it.id == id }
+    }
+}
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git add .
+
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git commit -m "Paso 5: IDataManager y MemoryDataManager"
+
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
