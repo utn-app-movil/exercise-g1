@@ -31,5 +31,16 @@
     <string name="TextDataNoFound">La información no existe.</string>
     <string name="TextTitleDialogQuestion">Pregunta</string>
 
-
+    <!-- Pantalla de estadísticas de tareas (TaskStatsActivity) y el botón que la abre -->
+    <string name="btnTextStats_main">Estadísticas</string>
+    <string name="TextStatsTotal">Total de tareas registradas</string>
+    <string name="TextCompletedProgress">Porcentaje de tareas completadas</string>
+    <string name="TextBackToMenu">Volver al menú principal</string>
+    <string name="TextPending">Pendientes: %1$d</string>
+    <string name="TextInProgress">En progreso: %1$d</string>
+    <string name="TextCompleted">Completadas: %1$d</string>
+    <string name="TextCancelled">Canceladas: %1$d</string>
+    <string name="TextPercent">%1$d%%</string>
+    <string name="TextSearchHint">Buscar tarea</string>
+    <string name="TextTaskDeleted">Tarea eliminada</string>
 </resources>
