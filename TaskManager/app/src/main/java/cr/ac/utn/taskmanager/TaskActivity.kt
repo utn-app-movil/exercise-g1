@@ -91,7 +91,7 @@ class TaskActivity : AppCompatActivity(),
         dueMonth=month
         dueYear=year
         tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+             month + 1, year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -110,7 +110,9 @@ class TaskActivity : AppCompatActivity(),
                 return true
             }
             R.id.mnuDelete -> {
-                deleteTask()
+                util.showDialogCondition(this, "¿Está seguro de que desea eliminar esta tarea?") {
+                    deleteTask()
+                }
                 return true
             }
             R.id.mnuCancel -> {
@@ -170,7 +172,7 @@ class TaskActivity : AppCompatActivity(),
                     task.dueDate.monthValue, task.dueDate.year)
                 tvDueDate.setText(dueDateStr)
                 dueDay = task.dueDate.dayOfMonth
-                dueMonth = task.dueDate.monthValue
+                dueMonth = task.dueDate.monthValue - 1
                 dueYear = task.dueDate.year
                 invalidateOptionsMenu()
             }else{
@@ -190,7 +192,7 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=true
+        isEditMode=false
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
@@ -225,28 +227,33 @@ class TaskActivity : AppCompatActivity(),
                 }else{
                     val dueDate = util.parseStringToDateModern(tvDueDate.text.toString(),
                         "dd/MM/yyyy")
+                    if (dueDate == null) {
+                        Toast.makeText(this, "La fecha ingresada no es válida", Toast.LENGTH_LONG).show()
+                        return
+                    }
                     val selectedStatus = spStatus.selectedItem as TaskStatus
                     val selectedPriority = spPriority.selectedItem as TaskPriority
                     val task = Task(txtId.text.toString().trim(),
                         txtTitle.text.toString().trim(),
                         txtDescription.text.toString().trim(),
-                        LocalDate.of(dueDate?.year!!, dueDate?.month!!
-                            , dueDate?.dayOfMonth!!),
+                        dueDate,
                         LocalDate.now(),
                         selectedStatus,
                         txtAssignTo.text.toString().trim(),
                         selectedPriority,
                         txtObservation.text.toString().trim())
 
-                    if (!isEditMode)
+                    if (!isEditMode) {
                         TaskViewModel.saveTask(task)
-                    else
-                        TaskViewModel.updateTask(task)
-
-                    cleanScreen()
-
-                    Toast.makeText(this, getString(R.string.TextSaveSuccess)
-                        , Toast.LENGTH_LONG).show()
+                        cleanScreen()
+                        Toast.makeText(this, getString(R.string.TextSaveSuccess), Toast.LENGTH_LONG).show()
+                    } else {
+                        util.showDialogCondition(this, "¿Desea actualizar esta tarea?") {
+                            TaskViewModel.updateTask(task)
+                            cleanScreen()
+                            Toast.makeText(this, getString(R.string.TextSaveSuccess), Toast.LENGTH_LONG).show()
+                        }
+                    }
                 }
             }else{
                 Toast.makeText(this, "Datos incompletos"
