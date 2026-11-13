@@ -24,12 +24,23 @@
     <string name="TextDeleteSuccess">Information was deleted successfully</string>
     <string name="TextDuplicateData">The information is already stored.</string>
     <string name="TextSaveError">Error to save the information.</string>
-
+    <string name="TextUpdateQuestion">Do you want to update the task?</string>
+    <string name="TextInvalidDueDate">The due date is invalid.</string>
     <string name="TextDeleteError">Error to delete the information.</string>
     <string name="TextSaveQuestion">Do you want to save the information.</string>
     <string name="TextDeleteQuestion">Do you want to delete the information.</string>
     <string name="TextYes">Yes</string>
-    <string name="TextNo">No</string>
+    <string name="TextNo">No</string>S
     <string name="TextDataNoFound">The information was not found.</string>
     <string name="TextTitleDialogQuestion">Question</string>
+    <string name="btnTextTaskStats_main">Statistics</string>
+    <string name="TextStatsTotal">Total tasks: %1$d</string>
+    <string name="TextStatsPending">Pending: %1$d</string>
+    <string name="TextStatsInProgress">In progress: %1$d</string>
+    <string name="TextStatsCompleted">Completed: %1$d</string>
+    <string name="TextStatsCancelled">Cancelled: %1$d</string>
+    <string name="TextStatsPercentage">Completed: %1$d%%</string>
+    <string name="TextBackToMain">Back to main menu</string>
+    <string name="TextSearchTasks">Search by title or description</string>
+    <string name="TextAllStatuses">ALL</string>
 </resources>

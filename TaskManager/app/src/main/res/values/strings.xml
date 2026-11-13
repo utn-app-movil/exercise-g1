@@ -25,11 +25,21 @@
     <string name="TextSaveError">Error al guardar la información.</string>
     <string name="TextDeleteError">Error al eliminar la información.</string>
     <string name="TextSaveQuestion">Desea guardar la información?</string>
+    <string name="TextUpdateQuestion">Desea actualizar la tarea?</string>
+    <string name="TextInvalidDueDate">La fecha de vencimiento no es válida.</string>
     <string name="TextDeleteQuestion">Desea eliminar la información?</string>
     <string name="TextYes">Si</string>
     <string name="TextNo">No</string>
     <string name="TextDataNoFound">La información no existe.</string>
     <string name="TextTitleDialogQuestion">Pregunta</string>
-
-
+    <string name="btnTextTaskStats_main">Estadísticas</string>
+    <string name="TextStatsTotal">Total de tareas: %1$d</string>
+    <string name="TextStatsPending">Pendientes: %1$d</string>
+    <string name="TextStatsInProgress">En progreso: %1$d</string>
+    <string name="TextStatsCompleted">Completadas: %1$d</string>
+    <string name="TextStatsCancelled">Canceladas: %1$d</string>
+    <string name="TextStatsPercentage">Completado: %1$d%%</string>
+    <string name="TextBackToMain">Volver al menú principal</string>
+    <string name="TextSearchTasks">Buscar por título o descripción</string>
+    <string name="TextAllStatuses">TODAS</string>
 </resources>
