@@ -170,7 +170,7 @@ class TaskActivity : AppCompatActivity(),
                     task.dueDate.monthValue, task.dueDate.year)
                 tvDueDate.setText(dueDateStr)
                 dueDay = task.dueDate.dayOfMonth
-                dueMonth = task.dueDate.monthValue
+                dueMonth = task.dueDate.monthValue - 1
                 dueYear = task.dueDate.year
                 invalidateOptionsMenu()
             }else{
@@ -214,59 +214,128 @@ class TaskActivity : AppCompatActivity(),
                 && txtAssignTo.text.toString().trim().isNotBlank()
     }
 
-    fun saveTask(){
+    fun saveTask() {
         try {
-            if (isValidationData()){
-                val task = TaskViewModel.getTaskById(txtId.text.toString().trim())
-                if (task != null
-                    && !isEditMode){
-                    Toast.makeText(this, getString(R.string.TextDuplicateData)
-                        , Toast.LENGTH_LONG).show()
-                }else{
-                    val dueDate = util.parseStringToDateModern(tvDueDate.text.toString(),
-                        "dd/MM/yyyy")
-                    val selectedStatus = spStatus.selectedItem as TaskStatus
-                    val selectedPriority = spPriority.selectedItem as TaskPriority
-                    val task = Task(txtId.text.toString().trim(),
+            if (isValidationData()) {
+
+                val existingTask = TaskViewModel.getTaskById(
+                    txtId.text.toString().trim()
+                )
+
+                if (existingTask != null && !isEditMode) {
+                    Toast.makeText(
+                        this,
+                        getString(R.string.TextDuplicateData),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    val dueDate = util.parseStringToDateModern(
+                        tvDueDate.text.toString(),
+                        "dd/MM/yyyy"
+                    )
+
+                    if (dueDate == null) {
+                        Toast.makeText(
+                            this,
+                            "La fecha no es válida",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        return
+                    }
+
+                    val selectedStatus =
+                        spStatus.selectedItem as TaskStatus
+                    val selectedPriority =
+                        spPriority.selectedItem as TaskPriority
+
+                    val task = Task(
+                        txtId.text.toString().trim(),
                         txtTitle.text.toString().trim(),
                         txtDescription.text.toString().trim(),
-                        LocalDate.of(dueDate?.year!!, dueDate?.month!!
-                            , dueDate?.dayOfMonth!!),
+                        dueDate,
                         LocalDate.now(),
                         selectedStatus,
                         txtAssignTo.text.toString().trim(),
                         selectedPriority,
-                        txtObservation.text.toString().trim())
+                        txtObservation.text.toString().trim()
+                    )
 
-                    if (!isEditMode)
+                    if (!isEditMode) {
                         TaskViewModel.saveTask(task)
-                    else
-                        TaskViewModel.updateTask(task)
+                        cleanScreen()
 
-                    cleanScreen()
+                        Toast.makeText(
+                            this,
+                            getString(R.string.TextSaveSuccess),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    } else {
+                        androidx.appcompat.app.AlertDialog.Builder(this)
+                            .setTitle("Confirmar actualización")
+                            .setMessage(
+                                "¿Está seguro de que desea actualizar esta tarea?"
+                            )
+                            .setPositiveButton("Sí, actualizar") { _, _ ->
+                                try {
+                                    TaskViewModel.updateTask(task)
+                                    cleanScreen()
 
-                    Toast.makeText(this, getString(R.string.TextSaveSuccess)
-                        , Toast.LENGTH_LONG).show()
+                                    Toast.makeText(
+                                        this,
+                                        "Tarea actualizada correctamente",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                } catch (e: Exception) {
+                                    Toast.makeText(
+                                        this,
+                                        e.message ?: "Error al actualizar",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }
+                            }
+                            .setNegativeButton("Cancelar", null)
+                            .show()
+                    }
                 }
-            }else{
-                Toast.makeText(this, "Datos incompletos"
-                    , Toast.LENGTH_LONG).show()
+            } else {
+                Toast.makeText(
+                    this,
+                    "Datos incompletos",
+                    Toast.LENGTH_LONG
+                ).show()
             }
-        }catch (e: Exception){
-            Toast.makeText(this, e.message.toString()
-                , Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            Toast.makeText(
+                this,
+                e.message ?: "Error al guardar la tarea",
+                Toast.LENGTH_LONG
+            ).show()
         }
     }
 
     fun deleteTask(): Unit {
-        try {
-            TaskViewModel.removeTask(txtId.text.toString())
-            cleanScreen()
-            Toast.makeText(this, getString(R.string.TextDeleteSuccess),
-                Toast.LENGTH_LONG).show()
-        } catch (e: Exception) {
-            Toast.makeText(this, e.message.toString(),
-                Toast.LENGTH_LONG).show()
-        }
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Confirmar eliminación")
+            .setMessage("¿Está seguro de que desea eliminar esta tarea?")
+            .setPositiveButton("Sí, eliminar") { _, _ ->
+                try {
+                    TaskViewModel.removeTask(txtId.text.toString().trim())
+                    cleanScreen()
+
+                    Toast.makeText(
+                        this,
+                        getString(R.string.TextDeleteSuccess),
+                        Toast.LENGTH_LONG
+                    ).show()
+                } catch (e: Exception) {
+                    Toast.makeText(
+                        this,
+                        e.message.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 }
