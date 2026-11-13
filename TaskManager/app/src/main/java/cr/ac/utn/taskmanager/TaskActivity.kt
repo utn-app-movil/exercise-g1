@@ -1,6 +1,7 @@
 package cr.ac.utn.taskmanager
 
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -14,6 +15,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -91,7 +93,7 @@ class TaskActivity : AppCompatActivity(),
         dueMonth=month
         dueYear=year
         tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+             month + 1, year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -154,6 +156,8 @@ class TaskActivity : AppCompatActivity(),
         datePickerDialog.show()
     }
 
+
+
     private fun searchTask(id: String){
         try {
             val task = TaskViewModel.getTaskById(id)
@@ -170,7 +174,7 @@ class TaskActivity : AppCompatActivity(),
                     task.dueDate.monthValue, task.dueDate.year)
                 tvDueDate.setText(dueDateStr)
                 dueDay = task.dueDate.dayOfMonth
-                dueMonth = task.dueDate.monthValue
+                dueMonth = task.dueDate.monthValue -1
                 dueYear = task.dueDate.year
                 invalidateOptionsMenu()
             }else{
@@ -190,7 +194,7 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=true
+        isEditMode=false
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
@@ -238,15 +242,31 @@ class TaskActivity : AppCompatActivity(),
                         selectedPriority,
                         txtObservation.text.toString().trim())
 
-                    if (!isEditMode)
+
+                    if (!isEditMode) {
                         TaskViewModel.saveTask(task)
-                    else
-                        TaskViewModel.updateTask(task)
 
-                    cleanScreen()
+                        cleanScreen()
 
-                    Toast.makeText(this, getString(R.string.TextSaveSuccess)
-                        , Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, getString(R.string.TextSaveSuccess)
+                            , Toast.LENGTH_LONG).show()
+                    } else {
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle(getString(R.string.TextTitleDialogQuestion))
+                        builder.setMessage(getString(R.string.TextSaveQuestion))
+                        builder.setPositiveButton(getString(R.string.TextYes),
+                            DialogInterface.OnClickListener { dialog, which ->
+                                TaskViewModel.updateTask(task)
+                                cleanScreen()
+                                Toast.makeText(this, getString(R.string.TextSaveSuccess)
+                                    , Toast.LENGTH_LONG).show()
+                            })
+                        builder.setNegativeButton(getString(R.string.TextNo),
+                            DialogInterface.OnClickListener { dialog, which ->
+                                dialog.dismiss()
+                            })
+                        builder.show()
+                    }
                 }
             }else{
                 Toast.makeText(this, "Datos incompletos"
@@ -259,14 +279,29 @@ class TaskActivity : AppCompatActivity(),
     }
 
     fun deleteTask(): Unit{
-        try {
-            TaskViewModel.removeTask(txtId.text.toString())
-            cleanScreen()
-            Toast.makeText(this, getString(R.string.TextDeleteSuccess)
-                , Toast.LENGTH_LONG).show()
-        }catch (e: Exception){
-            Toast.makeText(this, e.message.toString()
-                , Toast.LENGTH_LONG).show()
-        }
+        val id = txtId.text.toString()
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.TextTitleDialogQuestion))
+        builder.setMessage(getString(R.string.TextDeleteQuestion))
+        builder.setPositiveButton(getString(R.string.TextYes),
+
+            DialogInterface.OnClickListener { dialog, which ->
+                try {
+                    TaskViewModel.removeTask(id)
+                    cleanScreen()
+                    Toast.makeText(this, getString(R.string.TextDeleteSuccess)
+                        , Toast.LENGTH_LONG).show()
+                }catch (e: Exception){
+                    Toast.makeText(this, e.message.toString()
+                        , Toast.LENGTH_LONG).show()
+                }
+            })
+
+        builder.setNegativeButton(getString(R.string.TextNo),
+            DialogInterface.OnClickListener { dialog, which ->
+                dialog.dismiss()
+            })
+        builder.show()
     }
 }
