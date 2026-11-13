@@ -24,7 +24,10 @@ class util {
 
         fun parseStringToDateModern(dateString: String, pattern: String): LocalDate? {
             return try {
-                val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.getDefault())
+                val formatter = DateTimeFormatter.ofPattern(
+                    pattern,
+                    Locale.getDefault()
+                )
                 LocalDate.parse(dateString, formatter)
             } catch (e: Exception) {
                 e.printStackTrace()

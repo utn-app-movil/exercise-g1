@@ -24,7 +24,6 @@
     <string name="TextDeleteSuccess">Information was deleted successfully</string>
     <string name="TextDuplicateData">The information is already stored.</string>
     <string name="TextSaveError">Error to save the information.</string>
-
     <string name="TextDeleteError">Error to delete the information.</string>
     <string name="TextSaveQuestion">Do you want to save the information.</string>
     <string name="TextDeleteQuestion">Do you want to delete the information.</string>
@@ -32,4 +31,37 @@
     <string name="TextNo">No</string>
     <string name="TextDataNoFound">The information was not found.</string>
     <string name="TextTitleDialogQuestion">Question</string>
+    <string name="stats_title">Task Summary</string>
+    <string name="stats_total_default">Total Tasks: 0</string>
+    <string name="stats_pending_default">Pending: 0</string>
+    <string name="stats_in_progress_default">In Progress: 0</string>
+    <string name="stats_completed_default">Completed: 0</string>
+    <string name="stats_cancelled_default">Cancelled: 0</string>
+    <string name="stats_progress_default">Completed Tasks: 0%</string>
+    <string name="stats_back_main">Back to Main Menu</string>
+    <string name="stats_total_count">Total Tasks: %1$d</string>
+    <string name="stats_pending_count">Pending: %1$d</string>
+    <string name="stats_in_progress_count">In Progress: %1$d</string>
+    <string name="stats_completed_count">Completed: %1$d</string>
+    <string name="stats_cancelled_count">Cancelled: %1$d</string>
+    <string name="stats_progress_count">Completed Tasks: %1$d%%</string>
+    <!-- Statistics button -->
+    <string name="btnTextTaskStats_main">Task Statistics</string>
+    <!-- Task Search and Filters -->
+
+    <string name="task_search_hint">Search tasks...</string>
+
+    <string name="task_filter_all">All</string>
+    <string name="task_filter_pending">Pending</string>
+    <string name="task_filter_in_progress">In Progress</string>
+    <string name="task_filter_completed">Completed</string>
+    <string name="task_filter_cancelled">Cancelled</string>
+
+    <string-array name="task_filter_options">
+        <item>@string/task_filter_all</item>
+        <item>@string/task_filter_pending</item>
+        <item>@string/task_filter_in_progress</item>
+        <item>@string/task_filter_completed</item>
+        <item>@string/task_filter_cancelled</item>
+    </string-array>
 </resources>

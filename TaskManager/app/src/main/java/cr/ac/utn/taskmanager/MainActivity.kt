@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
 import cr.ac.utn.taskmanager.util.util
+import android.content.Intent
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,5 +64,20 @@ class MainActivity : AppCompatActivity() {
             util.openActivity(this
                 , TaskListActivity::class.java)
         })
+
+        // Botón para abrir la pantalla de estadísticas
+        val btnTaskStats: Button = findViewById(R.id.btnTaskStats_main)
+
+        btnTaskStats.setOnClickListener {
+
+            // Crear un Intent explícito hacia TaskStatsActivity
+            val intent = Intent(
+                this,
+                TaskStatsActivity::class.java
+            )
+
+            // Iniciar la pantalla de estadísticas
+            startActivity(intent)
+        }
     }
 }
