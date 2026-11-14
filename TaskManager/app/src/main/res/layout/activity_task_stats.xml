@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".TaskStatsActivity">
+
+    <TextView
+        android:id="@+id/tvTitle_Stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estadísticas de Tareas"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"/>
+
+    <TextView
+        android:id="@+id/tvTotalTasks_Stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total de Tareas: 0"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle_Stats"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="32dp"/>
+
+    <TextView
+        android:id="@+id/tvPending_Stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pendientes: 0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvTotalTasks_Stats"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvInProgress_Stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="En Progreso: 0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvPending_Stats"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:id="@+id/tvCompleted_Stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Completadas: 0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvInProgress_Stats"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:id="@+id/tvCancelled_Stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Canceladas: 0"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvCompleted_Stats"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:id="@+id/tvProgressLabel_Stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Porcentaje de Completadas:"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvCancelled_Stats"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="32dp"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar_Stats"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:max="100"
+        android:progress="0"
+        app:layout_constraintTop_toBottomOf="@id/tvProgressLabel_Stats"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/btnBack_Stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volver"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="32dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

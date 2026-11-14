@@ -16,15 +16,18 @@ const val EXTRA_MESSAGE_ID = "cr.ac.utn.task.Id"
 class util {
     companion object{
         fun openActivity(context: Context
-                         , objClass: Class<*>, extraName: String="", value: String?=null){
+                         , objClass: Class<*>, extraName:
+                         String="", value: String?=null){
             val intent= Intent(context
                 , objClass).apply { putExtra(extraName, value)}
             context.startActivity(intent)
         }
 
-        fun parseStringToDateModern(dateString: String, pattern: String): LocalDate? {
+        fun parseStringToDateModern(dateString: String, pattern: String):
+                LocalDate? {
             return try {
-                val formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.getDefault())
+                val formatter =
+                    DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
                 LocalDate.parse(dateString, formatter)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -32,9 +35,11 @@ class util {
             }
         }
 
-        fun parseStringToDateTimeModern(dateTimeString: String, pattern: String): LocalDateTime? {
+        fun parseStringToDateTimeModern(dateTimeString: String, pattern: String):
+                LocalDateTime? {
             return try {
-                val formatter = DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
+                val formatter =
+                    DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
                 LocalDateTime.parse(dateTimeString, formatter)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -42,7 +47,8 @@ class util {
             }
         }
 
-        fun showDialogCondition(context: Context, questionText: String, callback: () ->  Unit){
+        fun showDialogCondition
+                    (context: Context, questionText: String, callback: () ->  Unit){
             val dialogBuilder = AlertDialog.Builder(context)
             dialogBuilder.setMessage(questionText)
                 .setCancelable(false)
