@@ -1,47 +1,57 @@
-# Resolucion de errores - TaskManager
+Estoy empezando a vre errores
+1er error:
+Cuando abro pantalla y le doy el botón de TaskListActivity se cierra la aplicación y la pantalla.
+![Error1](image.png)
+Solución:
+![alt text](image-1.png)
+Agregamos una función dentro de la aplicación le agregamos función al boton TaskListActivity
 
-## 1. Cierre al abrir `TaskListActivity`
+2do error
+En TaskListAdapter.kt hay una función que da error a la hora de correr porque esta mal creada ya que este código está en el Adapter de un RecyclerView. onBindViewHolder se llama por cada fila que se va a mostrar, y recibe la posición (position) de esa fila. Su trabajo es tomar el dato que corresponde a esa posición y pasárselo al ViewHolder con holder.bind(...) para que lo dibuje.
+![alt text](image-2.png)
+Solución
+Le quitamos esa linea al código y lo unico que le agregamos a la linea es val item = tasks[position]
 
-Al tocar el boton de la lista, la aplicacion se cerraba porque `TaskListActivity` no estaba registrada en `AndroidManifest.xml`. Se agrego la actividad al manifest y se conecto el boton correspondiente desde `MainActivity`.
-
-![Error al abrir la lista](./image.png)
-
-![Correccion del primer error](./image-1.png)
-
-## 2. Elemento incorrecto en `TaskListAdapter`
-
-`onBindViewHolder` se ejecuta para cada fila del `RecyclerView`. Debe usar la posicion recibida para obtener el elemento que mostrara esa fila. Se corrigio el acceso a la lista para usar el indice directamente:
-
-```kotlin
-val item = tasks[position]
-```
-
-## 3. Error al interpretar fechas
-
-El conversor de fechas ignoraba el parametro `pattern` y utilizaba un formato fijo (`MM/dd/yyyy`). Esto podia hacer que fechas con dias mayores a 12 no se interpretaran correctamente. Se cambio el formateador para usar el patron recibido:
-
-```kotlin
+3er error
+A la hora de guardar una tarea si en la fecha se puso un numero alto mayor a 12 a la hora de guardar la tarea devolverá un dato null
+![alt text](image-3.png)
+Solución:
+Configurarlo para que use el parametro pattern recibido
+cambiamos esto:
+DateTimeFormatter.ofPattern("MM/dd/yyyy", Locale.getDefault())
+Por esto:
 DateTimeFormatter.ofPattern(pattern, Locale.getDefault())
-```
 
-## 4. Estado incorrecto al cancelar o limpiar una tarea
+4to error
+Cuando se intenta llenar una tarea y uno presiona el boton de cancelar que es la X aparece un boton de una papelera para eliminar la tarea, si embargo al presionarla ocurre un error y no se sabe que eliminar
+![alt text](image-4.png)
+Solución:
+1.
+isEditMode = false: Le indica a la aplicación que el formulario está listo para crear una tarea totalmente nueva, no para editar una vieja.
+2.
+txtId.isEnabled = true: Vuelve a habilitar la casilla del ID para que puedas escribirle un código o número al nuevo registro.
+3.
+invalidateOptionsMenu(): Le avisa a la barra superior (ActionBar) que redibuje los botones. Como isEditMode ahora es false, la app oculta automáticamente el botón de Eliminar (la papelera), ya que no puedes eliminar una tarea que todavía no existe.
 
-Al limpiar el formulario para crear una tarea nueva, se restablece `isEditMode` a `false`, se habilita el campo del ID y se actualiza el menu. Asi no queda visible la opcion de eliminar para una tarea que aun no existe.
+5to error
+Hay un bug en TaskActivity ya que en
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.crud_actions, menu)
+        menuDelete = menu!!.findItem(R.id.mnuDelete)
+        menuDelete.isVisible = isEditMode
+        invalidateOptionsMenu()
+        return true
+    }
 
-## 5. Invalidacion repetida del menu
+invalidateOptionsMenu() genera un bucle infinito
+Solución:
+Eliminar el invalidateOptionsMenu()
 
-`invalidateOptionsMenu()` dentro de `onCreateOptionsMenu` solicitaba volver a crear el menu mientras este se estaba creando. Se retiro esa llamada de `onCreateOptionsMenu`. Se conserva la invalidacion en los puntos donde cambia el modo del formulario y hace falta refrescar la barra.
+6to error
+Realizar un cuadro de dialogo antes de realizar alguna acción sobre la tarea
+Solución:
+Se integró util.showDialogCondition al actualizar tareas en  TaskActivity.kt.
 
-## 6. Confirmacion antes de actualizar o eliminar
 
-Se agrego `util.showDialogCondition` en `TaskActivity` para pedir confirmacion antes de actualizar o eliminar una tarea.
-
-![Formulario de tarea](./image-3.png)
-
-## 7. Pantalla de estadisticas
-
-Se agrego `TaskStatsActivity` y su layout `activity_task_stats.xml`, se registro la actividad en `AndroidManifest.xml` y se conecto el boton de acceso desde `MainActivity`. La pantalla muestra el total de tareas, sus cantidades por estado y el porcentaje completado.
-
-![Lista de tareas](./image-2.png)
-
-![Formulario de tarea](./image-4.png)
+Agregar el archivo TaskStatsActivity, su XML ( activity_task_stats.xml), su registro en el Manifest y el botón de acceso desde MainActivity.
