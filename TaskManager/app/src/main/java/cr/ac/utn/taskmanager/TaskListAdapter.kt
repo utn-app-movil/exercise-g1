@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import cr.ac.utn.taskmanager.domain.model.Task
 
-class TaskListAdapter (private var tasks: List<Task>,
+class TaskListAdapter (private var tasks: MutableList<Task>,
                         val itemClickListener: OnItemClickListener):
                     RecyclerView.Adapter<CustomViewHolder>()
 {
@@ -21,12 +21,29 @@ class TaskListAdapter (private var tasks: List<Task>,
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val item = if (position > 0) tasks[position - 1] else tasks[position]
+        val item = tasks[position]
         holder.bind(item, itemClickListener)
     }
 
-    override fun getItemCount(): Int {
-        return tasks.size
+    override fun getItemCount(): Int = tasks.size
+
+    fun removeItem(position: Int): Task {
+        val removedTask = tasks.removeAt(position)
+        notifyItemRemoved(position)
+        return removedTask
+    }
+
+    fun restoreItem(task: Task, position: Int) {
+        if (!tasks.any { it.id == task.id }) {
+            val safePosition = position.coerceIn(0, tasks.size)
+            tasks.add(safePosition, task)
+            notifyItemInserted(safePosition)
+        }
+    }
+
+    fun updateTasks(newTasks: List<Task>) {
+        tasks = newTasks.toMutableList()
+        notifyDataSetChanged()
     }
 }
 

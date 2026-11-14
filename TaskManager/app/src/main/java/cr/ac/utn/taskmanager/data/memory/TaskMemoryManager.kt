@@ -6,6 +6,7 @@ import cr.ac.utn.taskmanager.domain.repository.ITaskRepository
 class TaskMemoryManager: ITaskRepository {
     private val tasks = mutableListOf<Task>()
     override fun addTask(task: Task){
+        tasks.removeIf { it.id == task.id }
         tasks.add(task)
     }
 

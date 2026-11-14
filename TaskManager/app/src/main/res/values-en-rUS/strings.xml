@@ -9,6 +9,14 @@
     <string name="TextSnackbar">Undo</string>
     <string name="btnTextTask_main">Task Management</string>
     <string name="btnTextTaskList_main">Task List</string>
+    <string name="btnTextTaskStats_main">Task Statistics</string>
+    <string name="stats_total_tasks">Total Registered Tasks: %d</string>
+    <string name="stats_pending">Pending (PENDING): %d</string>
+    <string name="stats_in_progress">In Progress (IN_PROGRESS): %d</string>
+    <string name="stats_completed">Completed (COMPLETED): %d</string>
+    <string name="stats_cancelled">Cancelled (CANCELLED): %d</string>
+    <string name="stats_progress_label">Completed Tasks Progress: %d%% (%d / %d)</string>
+    <string name="btn_back_main">Back to Main Menu</string>
     <string name="TextId">Id</string>
     <string name="TextTitle">Title</string>
     <string name="TextDescription">Description</string>
