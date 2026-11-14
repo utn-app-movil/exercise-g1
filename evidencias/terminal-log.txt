@@ -1,0 +1,168 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20261113123238
+Nombre de usuario: PE_CE_A_AND_B\berny
+Usuario RunAs: PE_CE_A_AND_B\berny
+Nombre de la configuración: 
+Máquina: PE_CE_A_AND_B (Microsoft Windows NT 10.0.26200.0)
+Aplicación host: powershell.exe -NoExit -ExecutionPolicy Bypass -File C:\Program Files\Android\Android Studio\plugins\terminal\shell-integrations\powershell\powershell-integration.ps1
+Id. de proceso: 2588
+PSVersion: 5.1.26100.9818
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9818
+BuildVersion: 10.0.26100.9818
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+La transcripción ha comenzado. El archivo de salida es evidencias\terminal-log.txt
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git add .
+
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git commit -m "Paso 4: entidad Person"
+
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>@'
+package cr.ac.utn.census.data
+
+import cr.ac.utn.census.entities.Person
+
+// Interface: contrato de almacenamiento. El controller depende de esta
+// interface y no de una clase concreta (principio D de SOLID)
+interface IDataManager {
+    fun getPersons(): List<Person>
+    fun getById(id: String): Person?
+    fun addPerson(person: Person)
+    fun updatePerson(person: Person)
+    fun deletePerson(id: String)
+}
+'@ | Set-Content -Path app\src\main\java\cr\ac\utn\census\data\IDataManager.kt -Encoding ASCII
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>type app\src\main\java\cr\ac\utn\census\data\IDataManager.kt.
+package cr.ac.utn.census.data
+
+import cr.ac.utn.census.entities.Person
+
+// Interface: contrato de almacenamiento. El controller depende de esta
+// interface y no de una clase concreta (principio D de SOLID)
+interface IDataManager {
+    fun getPersons(): List<Person>
+    fun getById(id: String): Person?
+    fun addPerson(person: Person)
+    fun updatePerson(person: Person)
+    fun deletePerson(id: String)
+}
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>@'
+package cr.ac.utn.census.data
+
+import cr.ac.utn.census.entities.Person
+
+// DataManager: guarda las personas en memoria (en una lista)
+class MemoryDataManager : IDataManager {
+    private val persons = mutableListOf<Person>()
+
+    override fun getPersons(): List<Person> = persons
+
+    override fun getById(id: String): Person? {
+        val result = persons.filter { it.id == id }
+        return if (result.any()) result[0] else null
+    }
+
+    override fun addPerson(person: Person) {
+        persons.add(person)
+    }
+
+    override fun updatePerson(person: Person) {
+        deletePerson(person.id)
+        addPerson(person)
+    }
+
+    override fun deletePerson(id: String) {
+        persons.removeIf { it.id == id }
+    }
+}
+'@ | Set-Content -Path app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt -Encoding ASCII
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt.
+app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt. : El módulo 'app' no pudo cargarse. Para obtener más 
+información, ejecute 'Import-Module app'.
+En línea: 1 Carácter: 1
++ app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt.
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (app\src\main\ja...DataManager.kt.:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CouldNotAutoLoadModule
+app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt. : El módulo 'app' no pudo cargarse. Para obtener más información, ejecute 'Import-Module app'.
+En línea: 1 Carácter: 1
++ app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt.
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (app\src\main\ja...DataManager.kt.:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CouldNotAutoLoadModule
+
+]1341;command_finished;exit_code=1;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>type app\src\main\java\cr\ac\utn\census\data\MemoryDataManager.kt
+package cr.ac.utn.census.data
+
+import cr.ac.utn.census.entities.Person
+
+// DataManager: guarda las personas en memoria (en una lista)
+class MemoryDataManager : IDataManager {
+    private val persons = mutableListOf<Person>()
+
+    override fun getPersons(): List<Person> = persons
+
+    override fun getById(id: String): Person? {
+        val result = persons.filter { it.id == id }
+        return if (result.any()) result[0] else null
+    }
+
+    override fun addPerson(person: Person) {
+        persons.add(person)
+    }
+
+    override fun updatePerson(person: Person) {
+        deletePerson(person.id)
+        addPerson(person)
+    }
+
+    override fun deletePerson(id: String) {
+        persons.removeIf { it.id == id }
+    }
+}
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git add .
+
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git commit -m "Paso 5: IDataManager y MemoryDataManager"
+
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>.\gradlew assembleDebug
+PS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> git add .
+warning: in the working copy of 'app/src/main/java/cr/ac/utn/census/data/IDataManager.kt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'app/src/main/java/cr/ac/utn/census/data/MemoryDataManager.kt', LF will be replaced by CRLF the next time Git touches it
+PS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> git commit -m "Paso 5: IDataManager y MemoryDataManager"
+[census-inicio a2c92cf] Paso 5: IDataManager y MemoryDataManager
+ 3 files changed, 67 insertions(+)
+ create mode 100644 app/src/main/java/cr/ac/utn/census/data/IDataManager.kt
+ create mode 100644 app/src/main/java/cr/ac/utn/census/data/MemoryDataManager.kt
+PS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> .\gradlew assembleDebug
+Calculating task graph as no cached configuration is available for tasks: assembleDebug
+
+BUILD SUCCESSFUL in 10s
+34 actionable tasks: 9 executed, 25 up-to-date
+Configuration cache entry stored.
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git log --oneline
+a2c92cf (HEAD -> census-inicio) Paso 5: IDataManager y MemoryDataManager
+8d6cd3f Paso 4: entidad Person
+7488c9a Paso 2: textos fijos pasados a strings.xml
+b3df015 Paso 1: renombrar proyecto a Census
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git add .
+warning: in the working copy of 'evidencias/terminal-log.txt', LF will be replaced by CRLF the next time Git touches it
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished
+PS>git commit -m "Paso 5: IDataManager y MemoryDataManager"
+
+]1341;command_finished;exit_code=0;current_directory=433A5C55736572735C6265726E795C4F6E6544726976655C4465736B746F705C65786572636973652D67312D6D61696E5C65786572636973652D67312D6D61696E5C43656E737573]1341;prompt_startedPS C:\Users\berny\OneDrive\Desktop\exercise-g1-main\exercise-g1-main\Census> ]1341;prompt_finished

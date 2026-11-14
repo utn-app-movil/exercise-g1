@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- CAMBIO: antes los tres títulos eran "Item" -->
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mnuSave"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/mnuTextSave"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mnuDelete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="@string/mnuTextDelete"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/mnuCancel"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="@string/mnuTextCancel"
+        app:showAsAction="ifRoom" />
+</menu>
