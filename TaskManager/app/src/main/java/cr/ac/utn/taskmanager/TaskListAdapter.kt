@@ -28,6 +28,15 @@ class TaskListAdapter (private var tasks: List<Task>,
     override fun getItemCount(): Int {
         return tasks.size
     }
+
+    fun updateList(newTasks: List<Task>){
+        tasks = newTasks
+        notifyDataSetChanged()
+    }
+
+    fun getTask(position: Int): Task{
+        return tasks[position]
+    }
 }
 
 class CustomViewHolder(view: View): RecyclerView.ViewHolder(view)
