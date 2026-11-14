@@ -21,7 +21,7 @@ class TaskListAdapter (private var tasks: MutableList<Task>,
     }
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val item = if (position > 0) tasks[position] else tasks[position]
+        val item = tasks[position]
         holder.bind(item, itemClickListener)
     }
 
@@ -34,8 +34,16 @@ class TaskListAdapter (private var tasks: MutableList<Task>,
     }
 
     fun restoreItem(task: Task, position: Int) {
-        tasks.add(position, task)
-        notifyItemInserted(position)
+        if (!tasks.any { it.id == task.id }) {
+            val safePosition = position.coerceIn(0, tasks.size)
+            tasks.add(safePosition, task)
+            notifyItemInserted(safePosition)
+        }
+    }
+
+    fun updateTasks(newTasks: List<Task>) {
+        tasks = newTasks.toMutableList()
+        notifyDataSetChanged()
     }
 }
 
