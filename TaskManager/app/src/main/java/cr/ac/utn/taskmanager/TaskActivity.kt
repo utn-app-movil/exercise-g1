@@ -88,10 +88,10 @@ class TaskActivity : AppCompatActivity(),
     override fun onDateSet(view: android.widget.DatePicker?, year: Int
                             , month: Int, dayOfMonth: Int) {
         dueDay=dayOfMonth
-        dueMonth=month
+        dueMonth=month + 1
         dueYear=year
         tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+             dueMonth, year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -144,13 +144,13 @@ class TaskActivity : AppCompatActivity(),
     private fun resetDate(){
         val calendar = Calendar.getInstance()
         dueYear= calendar.get(Calendar.YEAR)
-        dueMonth= calendar.get(Calendar.MONTH)
+        dueMonth= calendar.get(Calendar.MONTH)+1
         dueDay= calendar.get(Calendar.DAY_OF_MONTH)
     }
 
     private fun showDatePickerDialog(){
         val datePickerDialog = DatePickerDialog(this,
-            this, dueYear, dueMonth, dueDay)
+            this, dueYear, dueMonth - 1, dueDay)
         datePickerDialog.show()
     }
 
@@ -217,8 +217,8 @@ class TaskActivity : AppCompatActivity(),
     fun saveTask(){
         try {
             if (isValidationData()){
-                val task = TaskViewModel.getTaskById(txtId.text.toString().trim())
-                if (task != null
+                val existingTask = TaskViewModel.getTaskById(txtId.text.toString().trim())
+                if (existingTask != null
                     && !isEditMode){
                     Toast.makeText(this, getString(R.string.TextDuplicateData)
                         , Toast.LENGTH_LONG).show()
@@ -238,15 +238,23 @@ class TaskActivity : AppCompatActivity(),
                         selectedPriority,
                         txtObservation.text.toString().trim())
 
-                    if (!isEditMode)
-                        TaskViewModel.saveTask(task)
-                    else
-                        TaskViewModel.updateTask(task)
+                    val action: () -> Unit = {
+                        if (!isEditMode)
+                            TaskViewModel.saveTask(task)
+                        else
+                            TaskViewModel.updateTask(task)
 
-                    cleanScreen()
+                        cleanScreen()
 
-                    Toast.makeText(this, getString(R.string.TextSaveSuccess)
-                        , Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, getString(R.string.TextSaveSuccess)
+                            , Toast.LENGTH_LONG).show()
+                    }
+
+                    if (isEditMode) {
+                        util.showDialogCondition(this, "¿Está seguro de actualizar la tarea?", action)
+                    } else {
+                        action()
+                    }
                 }
             }else{
                 Toast.makeText(this, "Datos incompletos"
@@ -255,15 +263,19 @@ class TaskActivity : AppCompatActivity(),
         }catch (e: Exception){
             Toast.makeText(this, e.message.toString()
                 , Toast.LENGTH_LONG).show()
+
+
         }
     }
 
-    fun deleteTask(): Unit{
+    fun deleteTask(){
         try {
-            TaskViewModel.removeTask(txtId.text.toString())
-            cleanScreen()
-            Toast.makeText(this, getString(R.string.TextDeleteSuccess)
-                , Toast.LENGTH_LONG).show()
+            util.showDialogCondition(this, "¿Está seguro de eliminar la tarea?") {
+                TaskViewModel.removeTask(txtId.text.toString())
+                cleanScreen()
+                Toast.makeText(this, getString(R.string.TextDeleteSuccess)
+                    , Toast.LENGTH_LONG).show()
+            }
         }catch (e: Exception){
             Toast.makeText(this, e.message.toString()
                 , Toast.LENGTH_LONG).show()
