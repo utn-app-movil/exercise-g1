@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import cr.ac.utn.taskmanager.domain.model.Task
 
-class TaskListAdapter (private var tasks: List<Task>,
+class TaskListAdapter (private var tasks: MutableList<Task>,
                         val itemClickListener: OnItemClickListener):
                     RecyclerView.Adapter<CustomViewHolder>()
 {
@@ -25,8 +25,17 @@ class TaskListAdapter (private var tasks: List<Task>,
         holder.bind(item, itemClickListener)
     }
 
-    override fun getItemCount(): Int {
-        return tasks.size
+    override fun getItemCount(): Int = tasks.size
+
+    fun removeItem(position: Int): Task {
+        val removedTask = tasks.removeAt(position)
+        notifyItemRemoved(position)
+        return removedTask
+    }
+
+    fun restoreItem(task: Task, position: Int) {
+        tasks.add(position, task)
+        notifyItemInserted(position)
     }
 }
 
