@@ -99,7 +99,6 @@ class TaskActivity : AppCompatActivity(),
         inflater.inflate(R.menu.crud_actions, menu)
         menuDelete = menu!!.findItem(R.id.mnuDelete)
         menuDelete.isVisible = isEditMode
-        invalidateOptionsMenu()
         return true
     }
 
