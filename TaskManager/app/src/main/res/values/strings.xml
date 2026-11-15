@@ -30,6 +30,6 @@
     <string name="TextNo">No</string>
     <string name="TextDataNoFound">La información no existe.</string>
     <string name="TextTitleDialogQuestion">Pregunta</string>
-
+    <string name="btnTextStats_main">Estadísticas</string>
 
 </resources>

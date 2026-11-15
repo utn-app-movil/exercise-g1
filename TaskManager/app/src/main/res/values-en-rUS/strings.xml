@@ -32,4 +32,5 @@
     <string name="TextNo">No</string>
     <string name="TextDataNoFound">The information was not found.</string>
     <string name="TextTitleDialogQuestion">Question</string>
+    <string name="btnTextStats_main">Statistics</string>
 </resources>

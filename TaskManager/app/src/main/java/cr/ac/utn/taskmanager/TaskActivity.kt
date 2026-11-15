@@ -190,7 +190,7 @@ class TaskActivity : AppCompatActivity(),
 
     private fun cleanScreen(){
         resetDate()
-        isEditMode=false
+        isEditMode=true
         txtId.isEnabled = true
         txtId.setText("")
         txtTitle.setText("")
