@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         val btnMessage1 : Button = findViewById<Button>(R.id.btnMessage1_main)
         btnMessage1.setOnClickListener(View.OnClickListener{ view ->
             Toast.makeText(this,
-                    getString(R.string.TextMessage1),
-                    Toast.LENGTH_LONG).show()
+                getString(R.string.TextMessage1),
+                Toast.LENGTH_LONG).show()
         })
 
         val clmain = findViewById<ConstraintLayout>(R.id.main)
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         val btnOpenScreen: Button = findViewById<Button>(R.id.btnOpenScreen_main)
         btnOpenScreen.setOnClickListener(View.OnClickListener{ view ->
             util.openActivity(this
-                    , SecondActivity::class.java)
+                , SecondActivity::class.java)
         })
 
         val btnOpenTask: Button = findViewById<Button>(R.id.btnTask_main)
@@ -62,6 +62,12 @@ class MainActivity : AppCompatActivity() {
         btnOpenTaskList.setOnClickListener(View.OnClickListener{ view ->
             util.openActivity(this
                 , TaskListActivity::class.java)
+        })
+
+        val btnOpenStats: Button = findViewById<Button>(R.id.btnStats_main)
+        btnOpenStats.setOnClickListener(View.OnClickListener { view ->
+            util.openActivity(this,
+                TaskStatsActivity::class.java)
         })
     }
 }

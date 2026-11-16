@@ -88,10 +88,10 @@ class TaskActivity : AppCompatActivity(),
     override fun onDateSet(view: android.widget.DatePicker?, year: Int
                             , month: Int, dayOfMonth: Int) {
         dueDay=dayOfMonth
-        dueMonth=month
+        dueMonth=month + 1
         dueYear=year
         tvDueDate.text = getDateFormatString(dayOfMonth,
-             month, year)
+             month + 1, year)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -144,13 +144,13 @@ class TaskActivity : AppCompatActivity(),
     private fun resetDate(){
         val calendar = Calendar.getInstance()
         dueYear= calendar.get(Calendar.YEAR)
-        dueMonth= calendar.get(Calendar.MONTH)
+        dueMonth= calendar.get(Calendar.MONTH) + 1
         dueDay= calendar.get(Calendar.DAY_OF_MONTH)
     }
 
     private fun showDatePickerDialog(){
         val datePickerDialog = DatePickerDialog(this,
-            this, dueYear, dueMonth, dueDay)
+            this, dueYear, if (dueMonth > 0) dueMonth - 1 else 0, dueDay)
         datePickerDialog.show()
     }
 
@@ -170,7 +170,7 @@ class TaskActivity : AppCompatActivity(),
                     task.dueDate.monthValue, task.dueDate.year)
                 tvDueDate.setText(dueDateStr)
                 dueDay = task.dueDate.dayOfMonth
-                dueMonth = task.dueDate.monthValue
+                dueMonth = task.dueDate.monthValue - 1
                 dueYear = task.dueDate.year
                 invalidateOptionsMenu()
             }else{
