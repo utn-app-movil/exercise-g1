@@ -3,6 +3,7 @@ package cr.ac.utn.taskmanager.viewmodel
 import androidx.lifecycle.ViewModel
 import cr.ac.utn.taskmanager.data.memory.TaskMemoryManager
 import cr.ac.utn.taskmanager.domain.model.Task
+import cr.ac.utn.taskmanager.domain.model.TaskStatus
 import cr.ac.utn.taskmanager.domain.repository.ITaskRepository
 
 class TaskViewModel: ViewModel() {
@@ -30,6 +31,13 @@ class TaskViewModel: ViewModel() {
 
         fun removeTask(id: String){
             repository.deleteTask(id)
+        }
+
+        fun filterTasks(text: String, status: TaskStatus?): List<Task>{
+            return repository.getTasks().filter {
+                it.title.contains(text, true)
+                        && (status == null || it.status == status)
+            }
         }
     }
 
